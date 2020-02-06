@@ -11,6 +11,9 @@ function [vars] = varSet(vars)
     vars.gridX = 600;
     vars.gridY = 600;
     
+    % Set below to 'behavioural' or 'eeg'
+    vars.experimentType = 'behavioural';
+    
     % How many blocks?
     vars.numOfExpBlocks = 6;
     % How many trials per block? 

@@ -39,4 +39,8 @@ points = 0;
 % Generate the struct of trials and cues to be given on each trial.
 [trials] = getTrials(vars);
 
-behaviouralLoop;
+if (vars.experimentType == 'behavioural')
+    behaviouralLoop;
+elseif (vars.experimentType == 'eeg')
+    eegLoop;
+end
