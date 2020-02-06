@@ -1,5 +1,5 @@
 % Psychtoolbox setup
-Screen('Preference', 'SkipSyncTests', 0);
+Screen('Preference', 'SkipSyncTests', 1);
 Screen('Preference','TextRenderer',0);
 Sc = start_psychtb([0 0 vars.resX vars.resY]);
 
