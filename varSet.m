@@ -5,11 +5,11 @@ function [vars] = varSet(vars)
     % SET EXPERIMENTAL VARIABLES IN THE BELOW BLOCK
     
     % Set X and Y dimensions of the experiment window below.
-    vars.resX = 1440;
-    vars.resY = 900;
+    vars.resX = 1080;
+    vars.resY = 600;
     
-    vars.gridX = 600;
-    vars.gridY = 600;
+    vars.gridX = 400;
+    vars.gridY = 400;
     
     % Set below to 'behavioural' or 'eeg'
     vars.experimentType = 'behavioural';

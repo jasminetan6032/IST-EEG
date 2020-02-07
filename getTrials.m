@@ -33,7 +33,6 @@ function [trials] = getTrials(vars)
         trialTot = vars.expBlockLength;
         trials(n).block = blockToAssign;
         trials(n).type = "decreasing";
-        
         % We assign block numbers to each trial based on how many trials we
         % know is in each block.
         if blockCounter == trialTot

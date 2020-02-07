@@ -48,12 +48,6 @@ for t = 1 : length(trials)
                     end
                     drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
                     vars = drawGrid(Sc.window,vars);
-                    nextToFlip = ceil(rand*25);
-                    while (tilesCoord(nextToFlip,3) == 1)
-                        nextToFlip = ceil(rand*25);
-                    end
-                    tilesCoord(nextToFlip,3) = 1;
-                    Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
                     drawAnswerBox(Sc.window,answerCoords);
                     Screen('Flip',Sc.window);
                     break;
