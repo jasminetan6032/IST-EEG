@@ -31,7 +31,6 @@ answerCoords(2) = winAreaY*0.875;
 answerCoords(3) = winAreaX*0.55;
 answerCoords(4) = winAreaY*0.95;
 vars.answerCoords = answerCoords;
-Screen('FrameRect',Sc.window,[0,0,0],answerCoords,1);
 
 optionCoords = [];
 optionCoords(1,1) = winAreaX*0.35;

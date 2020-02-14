@@ -44,9 +44,25 @@ for t = 1 : length(trials)
                                 colourArr(numOfFlips,:) = colours(2,:);
                                 hiddenGrid(arrayX,arrayY) = 2;
                             end
+                            
+                            trials(t).trialBreakdown(numOfFlips).flipNumber = numOfFlips;
+                            trials(t).trialBreakdown(numOfFlips).colourRevealed = vars.colourNames(grid(arrayX,arrayY));
+                            reducedGrid = nonzeros(hiddenGrid);
+                            trials(t).trialBreakdown(numOfFlips).majorityColour = vars.colourNames(mode(reducedGrid));
+                            trials(t).trialBreakdown(numOfFlips).majorityAmount = sum(reducedGrid==mode(reducedGrid))-sum(reducedGrid~=mode(reducedGrid));
+                            trials(t).trialBreakdown(numOfFlips).majPCorrect = getPcorrect(mode(reducedGrid),reducedGrid,vars);
+                            trials(t).trialBreakdown(numOfFlips).timestamp = flipTimestamps(numOfFlips);
+                            if numOfFlips == 1
+                                trials(t).trialBreakdown(numOfFlips).timeSinceLastFlip = flipTimestamps(1) - trials(t).trialStart;
+                            else
+                                trials(t).trialBreakdown(numOfFlips).timeSinceLastFlip = flipTimestamps(numOfFlips) - flipTimestamps(numOfFlips-1);
+                            end
+                            trials(t).trialBreakdown(numOfFlips).currentGrid = hiddenGrid;
+                            trials(t).trialBreakdown(numOfFlips).tileClicked = [arrayX arrayY];
+                            
                             drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
                             vars = drawGrid(Sc.window,vars);
-                            drawAnswerBox(Sc.window,answerCoords);
+                            drawAnswerBox(Sc.window,answerCoords);                     
                             Screen('Flip',Sc.window);
                             break;
                         elseif (X > answerCoords(1) && X < answerCoords(3) && Y > answerCoords(2) && Y < answerCoords(4) && numOfFlips > 0) 
@@ -56,6 +72,7 @@ for t = 1 : length(trials)
                             trials(t).finalGridState = hiddenGrid;
                             hiddenGrid = nonzeros(hiddenGrid);
                             trials(t).majorityRevealed = vars.colourNames(mode(hiddenGrid));
+                            trials(t).finalPCorrect = getPcorrect(mode(hiddenGrid),trials(t).finalGridState,vars);
                             trials(t).majorityMargin = sum(hiddenGrid==mode(hiddenGrid))-sum(hiddenGrid~=mode(hiddenGrid));
                             break;
                         end
@@ -97,6 +114,7 @@ for t = 1 : length(trials)
                         else
                             trials(t).correct = 0;
                             trialText = "incorrect!";
+                            Beeper(1000,.4,.5);
                             points = points - vars.wrongTokenLoss;
                             trials(t).reward = vars.wrongTokenLoss*-1;
                         end
