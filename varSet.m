@@ -12,7 +12,7 @@ function [vars] = varSet(vars)
     vars.gridY = 400;
     
     % Set below to 'behavioural' or 'eeg'
-    vars.experimentType = 'behavioural';
+    vars.experimentType = 'eeg';
     
     % How many blocks?
     vars.numOfExpBlocks = 6;

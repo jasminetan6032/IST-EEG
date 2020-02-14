@@ -28,11 +28,11 @@ for t = 1 : length(trials)
     while (flipEndFlag == 0)
         [x,y,buttons] = GetMouse;
         % If left mouse button is clicked
-        if(buttons(1)||buttons(2)||buttons(3))
+        if(buttons(1))
             while 1
                 % Wait for mouse release.
                 [x,y,buttons] = GetMouse; 
-                if(~(buttons(1))&&~(buttons(2))&&~(buttons(3)))
+                if(~(buttons(1)))
                     flipTimestamps = [flipTimestamps GetSecs];
                     numOfFlips = numOfFlips + 1;
                     decPoints = decPoints - vars.decreasingDec;
