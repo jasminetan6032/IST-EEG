@@ -6,6 +6,9 @@
 % decreasing win conditions and contains triggers for use in EEG via
 % Biosemi.
 
+% This is the main entry to the program, so run this script to run the
+% whole experiment.
+
 %% Setup
 
 close all;
@@ -32,13 +35,19 @@ tic
 %     starttrial=1;
 % end
 
+% Below script sets the initial value for varibles we need for the
+% experiment.
 initialiseVars;
-
-points = 0;
 
 % Generate the struct of trials and cues to be given on each trial.
 [trials] = getTrials(vars);
 
+% We need to see which experiment we are doing: behavioural or eeg.
+% Behavioural: allow participants to choose while tile to reveal and click
+% on a box to answer.
+% EEG: participants control experiment only using left and right mouse
+% clicks without moving mouse in order to reduce eye movements. Also
+% contains triggers for BIOSEMI.
 if (strcmp(vars.experimentType,'behavioural'))
     behaviouralLoop;
 elseif (strcmp(vars.experimentType,'eeg'))

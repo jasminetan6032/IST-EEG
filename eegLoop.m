@@ -128,8 +128,8 @@ for t = 1 : length(trials)
                         trials(t).correct = 0;
                         trialText = "incorrect!";
                         Beeper(1000,.4,.5);
-                        points = points - vars.wrongTokenLoss;
-                        trials(t).reward = vars.wrongTokenLoss*-1;
+                        points = points - vars.wrongPointsLoss;
+                        trials(t).reward = vars.wrongPointsLoss*-1;
                     end
                     answerFlag = 1;
                     break;

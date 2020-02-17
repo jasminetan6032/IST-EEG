@@ -59,12 +59,16 @@ function [trials] = getTrials(vars)
             numOfColour1 = floor(tiles/2);
             numOfColour2 = ceil(tiles/2);
         end
+        % check how many of each colour should be in the grid.
         trials(n).numOfColour1 = numOfColour1;
         trials(n).numOfColour2 = numOfColour2;
         
+        % Before our grid becomes of dimensions x by y, we have an array
+        % gridFlat of (x*y) by 1.
         gridFlat = [repelem(1,numOfColour1) repelem(2,numOfColour2)];
         gridFlat = randsample(gridFlat,length(gridFlat));
         
+        % Convert gridFlat into proper x by y grid.
         count = 1;
         for x=1:X
             for y=1:Y
@@ -72,6 +76,11 @@ function [trials] = getTrials(vars)
                 count = count + 1;
             end
         end
+        % trueGrid - underarching grid with colours represented as either 1
+        % or 2.
+        % trueColourGrid - same as trueGrid, but colours shown in words
+        % instead (eg 'red' or 'yellow') as per the names assigned in
+        % varSet under colourNames.
         trials(n).trueGrid = grid;
         colourGrid = cell(size(grid));
         colourGrid(grid==1)={colourNames(1)};

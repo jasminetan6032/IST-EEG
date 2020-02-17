@@ -1,3 +1,6 @@
+%% drawGrid.m
+% Draw the lines for the IST Grid
+% Size of the grid should change depending on the screen resolution.
 function [vars] = drawGrid(win,vars)
 
     winAreaX = vars.resX;
@@ -18,16 +21,19 @@ function [vars] = drawGrid(win,vars)
     gridCorner4 = centerY + (gridAreaY/2);
     
     penWidth = 3;
-    
+    % Draw large square around entire grid
     Screen('FrameRect',win,[0,0,0],[gridCorner1 gridCorner2 gridCorner3 gridCorner4],penWidth);
     
+    % Derive the width each tile should be within the larger square
     squareWidth = gridAreaX/tilesX;
+    % Fill array with coordinates for each square.
     squareCoords = [];
     
     c = [gridCorner1, gridCorner2, gridCorner1+squareWidth, gridCorner2+squareWidth];
     c2 = c(2);
     c4 = c(4);
     count = 1;
+    % Draw each tile
     for n=1:tilesX
         for m=1:tilesY
             squareCoords(1,count) = c(1);
@@ -46,8 +52,11 @@ function [vars] = drawGrid(win,vars)
             end
         end
     end
+    % Below draws all x*y squares within one line, as squareCoords contains
+    % coordinates of all tiles.
     Screen('FrameRect',win,[0,0,0],squareCoords,penWidth);
     vars.squareCoords = squareCoords;
+    
 %     text = "Click on tiles in the grid to reveal their colour.";
 %     text = [text newline newline "When you are ready to answer, click the Answer button below"];
 %     textY = winAreaY*0.1;

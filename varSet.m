@@ -22,7 +22,7 @@ function [vars] = varSet(vars)
     % Set points for the fixed and decreasing win conditions.
     vars.fixedPointsWin = 100;
     vars.decreasingPointsStart = 250;
-    vars.wrongTokenLoss = 100;
+    vars.wrongPointsLoss = 100;
     vars.decreasingDec = 10;
     
     % What should the dimensions of our grid be?

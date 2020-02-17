@@ -1,3 +1,6 @@
+%% getPcorrect.m
+% Calculate the probability of participant guessing correctly for a given
+% colour. Adapted from Linda Wei's JS code, formula from Clark et al.
 function [p] = getPcorrect(colour, grid, vars)
     prob = 0;
     tilesSeen = sum(sum(grid~=0));
