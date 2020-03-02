@@ -1,11 +1,15 @@
 %% getTrials.m
 % Setup the trials struct and generate all our trials.
 function [trials] = getTrials(vars)
-    
-    % Total number of trials across the experiment.
-    numOfExpTrials = vars.numOfExpBlocks*vars.expBlockLength;
-    b = numOfExpTrials;
-    
+
+    if (strcmp(vars.expLengthMeasure,'trials'))
+        % Total number of trials across the experiment.
+        numOfExpTrials = vars.numOfExpBlocks*vars.expBlockLength;
+        b = numOfExpTrials;
+    else
+        b = 200;
+    end
+        
     blockToAssign = 1;
     blockCounter = 1;
     colourNames = vars.colourNames;
@@ -16,8 +20,8 @@ function [trials] = getTrials(vars)
     % Column headings.
     trials = struct('trialNumber',cell(1,b),'block',cell(1,b),...
     'break',cell(1,b),'type',cell(1,b),'numOfColour1',cell(1,b),'numOfColour2',cell(1,b),...
-    'finalAns',cell(1,b),'finalColour',cell(1,b),'finalPCorrect',cell(1,b),'numOfCjs',cell(1,b),'firstCjGiven',cell(1,b),...
-    'lastCjGiven',cell(1,b),'trueAns',cell(1,b),'trueColour',cell(1,b),'correct',cell(1,b),...
+    'finalAns',cell(1,b),'finalColour',cell(1,b),'finalPCorrect',cell(1,b),'finalCj',cell(1,b),'finalCjTime',cell(1,b),...
+    'cjLoc',cell(1,b),'cjDidRespond',cell(1,b),'trueAns',cell(1,b),'trueColour',cell(1,b),'correct',cell(1,b),...
     'numOfTilesRevealed',cell(1,b),'majorityRevealed',cell(1,b),'majorityMargin',cell(1,b),...
     'trialStart',cell(1,b),'answerTime',cell(1,b),'finalAnswerTime',cell(1,b),'trialEnd',cell(1,b),'trialTime',cell(1,b),...
     'averageTimeBetweenFlips',cell(1,b),'reward',cell(1,b),'totalPoints',cell(1,b),'trueGrid',...
@@ -26,13 +30,22 @@ function [trials] = getTrials(vars)
             'timestamp',cell(1,1),'timeSinceLastFlip',cell(1,1),'currentGrid',...
             cell(1,1),'tileClicked',cell(1,1)));
         
+        
     for n = 1:b
         % Load up trial numbers.
         trials(n).trialNumber = n;
         trials(n).break = 0;
         trialTot = vars.expBlockLength;
         trials(n).block = blockToAssign;
-        trials(n).type = "decreasing";
+        typesBlocks = vars.expBlocks;
+        typeOrder = vars.expStructure;
+        if blockToAssign <= typesBlocks(1)
+            trials(n).type = typeOrder(1);
+        elseif blockToAssign <= (typesBlocks(1)+typesBlocks(2))
+            trials(n).type = typeOrder(2);
+        else
+            trials(n).type = typeOrder(3);
+        end
         % We assign block numbers to each trial based on how many trials we
         % know is in each block.
         if blockCounter == trialTot

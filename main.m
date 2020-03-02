@@ -1,4 +1,4 @@
-%% Information Sampling Task for EEG %%%%%%%%%%%
+%% Information Sampling Tascask for EEG %%%%%%%%%%%
 % Author - Sriraj Aiyer
 % Contact - sriraj.aiyer@psy.ox.ac.uk
 
@@ -38,9 +38,11 @@ tic
 % Below script sets the initial value for varibles we need for the
 % experiment.
 initialiseVars;
-
+    
 % Generate the struct of trials and cues to be given on each trial.
 [trials] = getTrials(vars);
+
+% startInstructs;
 
 % We need to see which experiment we are doing: behavioural or eeg.
 % Behavioural: allow participants to choose while tile to reveal and click

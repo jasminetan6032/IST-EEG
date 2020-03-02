@@ -1,4 +1,6 @@
 for t = 1 : length(trials)
+    SetMouse(centerX, centerY);
+    HideCursor();
     flipTimestamps = [];
     decPoints = vars.decreasingPointsStart;
     
@@ -20,8 +22,9 @@ for t = 1 : length(trials)
         nextToFlip = ceil(rand*25);
     end
     tilesCoord(nextToFlip,3) = 1;
-    Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
     vars = drawGrid(Sc.window,vars);
+    squareCoords = vars.squareCoords;
+    Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
     Screen('Flip',Sc.window);
     % WHEN FLIP OCCURS
     while (flipEndFlag == 0)
@@ -85,7 +88,6 @@ for t = 1 : length(trials)
                 if(~buttons(2)&&~buttons(3))
                     trials(t).finalGridState = hiddenGrid;
                     hiddenGrid = nonzeros(hiddenGrid);
-                    trials(t).numOfTilesRevealed = numOfFlips;
                     trials(t).majorityMargin = sum(hiddenGrid==mode(hiddenGrid))-sum(hiddenGrid~=mode(hiddenGrid));
                     if (trials(t).majorityMargin == 0)
                         trials(t).majorityRevealed = 'neither';
@@ -99,9 +101,9 @@ for t = 1 : length(trials)
             end
         end
     end
-    drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
+    drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window);
     vars = drawGrid(Sc.window,vars);
-    drawOptions(Sc.window,colours(1,:),colours(2,:),optionCoords)
+    drawOptions(Sc.window,colours(1,:),colours(2,:),optionCoords);
     Screen('Flip',Sc.window);
     while (answerFlag == 0)
         [x,y,buttons] = GetMouse;
@@ -116,8 +118,8 @@ for t = 1 : length(trials)
                     trials(t).finalColour = vars.colourNames(1);
                     if (trials(t).trueAns == 1)
                         trials(t).correct = 1;
-                        trialText = "correct!";
-                        if (trials(t).type ~= 'decreasing')
+                        trialText = 'correct!';
+                        if (~strcmp(trials(t).type,'decreasing'))
                             points = points + vars.fixedPointsWin;
                             trials(t).reward = vars.fixedPointsWin;
                         else
@@ -126,8 +128,7 @@ for t = 1 : length(trials)
                         end
                     else
                         trials(t).correct = 0;
-                        trialText = "incorrect!";
-                        Beeper(1000,.4,.5);
+                        trialText = 'incorrect!';
                         points = points - vars.wrongPointsLoss;
                         trials(t).reward = vars.wrongPointsLoss*-1;
                     end
@@ -145,8 +146,8 @@ for t = 1 : length(trials)
                     trials(t).finalColour = vars.colourNames(2);
                     if (trials(t).trueAns == 2)
                         trials(t).correct = 1;
-                        trialText = "correct!";
-                        if (trials(t).type ~= 'decreasing')
+                        trialText = 'correct!';
+                        if (~strcmp(trials(t).type,'decreasing'))
                             points = points + vars.fixedPointsWin;
                             trials(t).reward = vars.fixedPointsWin;
                         else
@@ -155,9 +156,9 @@ for t = 1 : length(trials)
                         end
                     else
                         trials(t).correct = 0;
-                        trialText = "incorrect!";
-                        points = points - vars.wrongTokenLoss;
-                        trials(t).reward = vars.wrongTokenLoss*-1;
+                        trialText = 'incorrect!';
+                        points = points - vars.wrongPointsLoss;
+                        trials(t).reward = vars.wrongPointsLoss*-1;
                     end
                     answerFlag = 1;
                     break;
@@ -165,16 +166,26 @@ for t = 1 : length(trials)
             end
         end
     end
+    drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window);
+    vars = drawGrid(Sc.window,vars);
+    [trials(t).finalCj, trials(t).finalCjTime, ...
+    trials(t).cjLoc,trials(t).cjDidRespond] = ...
+    cjSlider(Sc,vars,cfg,fillCoords,numOfFlips,colourArr);
+
+    if (trials(t).correct == 0)
+        Beeper(1000,.4,.5);
+    end
+    
     % TRIAL OVER
     trials(t).trialEnd = GetSecs;
     trials(t).averageTimeBetweenFlips = mean(flipTimestamps);
     trials(t).trialTime = trials(t).trialEnd - trials(t).trialStart;
+    trials(t).numOfTilesRevealed = numOfFlips;
     trials(t).totalPoints = points;
     
-    drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
-    vars = drawGrid(Sc.window,vars);
-    %DrawFormattedText(Sc.window, trialText,trialx,trialy,[0 0 0]);
+    %Screen('DrawText',Sc.window, trialText,vars.centerX,trialy,[0 0 0]);
     Screen('Flip',Sc.window);
+    WaitSecs(1);
     
     if trials(t).break
         save([pwd '/' vars.rawdata_path num2str(subject.id) '/behaviour/' subject.fileName '_' num2str(round(t/vars.expBlockLength))],'trials', 'vars', 'subject', 't');

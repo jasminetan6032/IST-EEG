@@ -10,6 +10,8 @@ Sc = start_psychtb([0 0 winAreaX winAreaY]);
 xy = Screen('Resolution',0);
 centerX = winAreaX/2;
 centerY = winAreaY/2;
+vars.centerX = centerX;
+vars.centerY = centerY;
 
 % Dimensions of the IST grid.
 gridX = vars.gridDimX;
@@ -65,3 +67,19 @@ vars.colours = colours;
 
 % Starting amount of points.
 points = 0;
+
+% Cj Slider Vars
+
+cfg.bar.maxScale            = 55;
+cfg.bar.minScale            = -55;
+cfg.backgroundColour = Sc.bkgCol;           % grey
+cfg.fontsize=25;
+% instructions on screen
+cfg.instr.cjtext        = {'50%' '100%'};           % confidence judgement text
+cfg.instr.instr = {'Right click to confirm'}; % how to respond.
+cfg.instr.finaldecision = {'What is your final decision?'};                 
+cfg.instr.interval      = {'LEFT' 'RIGHT'};
+
+% Defining vars for dynamic experiment length
+subject.totalFlips = 0;
+subject.totalTime = 0;

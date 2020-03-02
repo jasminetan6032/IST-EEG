@@ -2,6 +2,8 @@
 % Main trial loop for behavioural experiments.
 
 for t = 1 : length(trials)
+    SetMouse(centerX, centerY);
+    ShowCursor("Arrow");
     % Set any initial values for variables at the start of each trial.
     
     % Keep track of times when each tile is flipped.
@@ -149,7 +151,7 @@ for t = 1 : length(trials)
                             trials(t).correct = 1;
                             trialText = "correct!";
                             % points update
-                            if (trials(t).type ~= 'decreasing')
+                            if (~strcmp(trials(t).type,'decreasing'))
                                 points = points + vars.fixedPointsWin;
                                 trials(t).reward = vars.fixedPointsWin;
                             else
@@ -177,7 +179,7 @@ for t = 1 : length(trials)
                         if (trials(t).trueAns == 2)
                             trials(t).correct = 1;
                             trialText = "correct!";
-                            if (trials(t).type ~= 'decreasing')
+                            if (~strcmp(trials(t).type,'decreasing'))
                                 points = points + vars.fixedPointsWin;
                                 trials(t).reward = vars.fixedPointsWin;
                             else
