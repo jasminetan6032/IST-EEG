@@ -83,3 +83,4 @@ cfg.instr.interval      = {'LEFT' 'RIGHT'};
 % Defining vars for dynamic experiment length
 subject.totalFlips = 0;
 subject.totalTime = 0;
+subject.numOfTrials = 1;

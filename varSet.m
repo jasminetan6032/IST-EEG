@@ -35,7 +35,7 @@ function [vars] = varSet(vars)
     
     % Below field only applicable for flips length generation.
     % How many flips do you want in the experiment for each trial type?
-    vars.numOfExpFlips = [100,100,100];
+    vars.numOfExpFlips = [100,100,0];
     % Below fields only applicable for time length generation.
     % How long do you want the experiment to be (in minutes) for each trial type?
     vars.numOfExpMinutes = [15,15,15];

@@ -2,13 +2,9 @@
 % Setup the trials struct and generate all our trials.
 function [trials] = getTrials(vars)
 
-    if (strcmp(vars.expLengthMeasure,'trials'))
-        % Total number of trials across the experiment.
-        numOfExpTrials = vars.numOfExpBlocks*vars.expBlockLength;
-        b = numOfExpTrials;
-    else
-        b = 200;
-    end
+    % Total number of trials across the experiment.
+    numOfExpTrials = vars.numOfExpBlocks*vars.expBlockLength;
+    b = numOfExpTrials;
         
     blockToAssign = 1;
     blockCounter = 1;

@@ -39,8 +39,22 @@ tic
 % experiment.
 initialiseVars;
     
-% Generate the struct of trials and cues to be given on each trial.
-[trials] = getTrials(vars);
+if (strcmp(vars.expLengthMeasure,'trials'))
+    % Generate the struct of trials and cues to be given on each trial.
+    [trials] = getTrials(vars);
+else
+    trials = struct('trialNumber',cell(1,1),...
+    'break',cell(1,1),'type',cell(1,1),'numOfColour1',cell(1,1),'numOfColour2',cell(1,1),...
+    'finalAns',cell(1,1),'finalColour',cell(1,1),'finalPCorrect',cell(1,1),'finalCj',cell(1,1),'finalCjTime',cell(1,1),...
+    'cjLoc',cell(1,1),'cjDidRespond',cell(1,1),'trueAns',cell(1,1),'trueColour',cell(1,1),'correct',cell(1,1),...
+    'numOfTilesRevealed',cell(1,1),'majorityRevealed',cell(1,1),'majorityMargin',cell(1,1),...
+    'trialStart',cell(1,1),'answerTime',cell(1,1),'finalAnswerTime',cell(1,1),'trialEnd',cell(1,1),'trialTime',cell(1,1),...
+    'averageTimeBetweenFlips',cell(1,1),'reward',cell(1,1),'totalPoints',cell(1,1),'trueGrid',...
+    cell(1,1),'trueColourGrid',cell(1,1),'finalGridState',cell(1,1),'trialBreakdown',struct('flipNumber',cell(1,1),'colourRevealed',...
+            cell(1,1),'majorityColour',cell(1,1),'majorityAmount',cell(1,1),'majPCorrect',cell(1,1),...
+            'timestamp',cell(1,1),'timeSinceLastFlip',cell(1,1),'currentGrid',...
+            cell(1,1),'tileClicked',cell(1,1)));
+end
 
 % startInstructs;
 
@@ -50,8 +64,56 @@ initialiseVars;
 % EEG: participants control experiment only using left and right mouse
 % clicks without moving mouse in order to reduce eye movements. Also
 % contains triggers for BIOSEMI.
-if (strcmp(vars.experimentType,'behavioural'))
-    behaviouralLoop;
-elseif (strcmp(vars.experimentType,'eeg'))
-    eegLoop;
+if (strcmp(vars.expLengthMeasure,"trials"))
+    if (strcmp(vars.experimentType,'behavioural'))
+        for t = 1 : length(trials)
+            behaviouralLoop;
+        end
+    elseif (strcmp(vars.experimentType,'eeg'))
+        for t = 1 : length(trials)
+            eegLoop;
+        end
+    end
+else
+    endFlag = 0;
+    if (strcmp(vars.experimentType,'behavioural'))
+        while 1
+            [trials, endFlag, subject] = dynamicTrials(vars,trials,subject);
+            if (endFlag == 1)
+                break;
+            else
+                t = subject.numOfTrials;
+                behaviouralLoop;
+            end
+        end
+    elseif (strcmp(vars.experimentType,'eeg'))
+        while 1
+            [trials, endFlag, subject] = dynamicTrials(vars,trials,subject);
+            if (endFlag == 1)
+                break;
+            else
+                t = subject.numOfTrials;
+                eegLoop;
+            end
+        end
+    end
+end
+
+subject.totalFlips = sum([trials.numOfTilesRevealed]);
+subject.totalTime = sum([trials.trialTime]);
+
+insimdata = imread('Instructions/thanks.jpeg');
+texins = Screen('MakeTexture', Sc.window, insimdata);
+Screen('DrawTexture', Sc.window, texins,[],Sc.rect);
+Screen('Flip',Sc.window);
+WaitSecs(.25);
+[x,y,buttons] = GetMouse;
+if(buttons(1))
+    while 1
+        % Wait for mouse release.
+        [x,y,buttons] = GetMouse; 
+        if(~(buttons(1)))
+            break;
+        end
+    end
 end
