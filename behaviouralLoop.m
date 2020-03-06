@@ -229,6 +229,7 @@ if trials(t).break
     text = [text newline newline newline 'You may now take a break. Click on the screen to continue.'];
     DrawFormattedText(Sc.window, text,'center', 'center', [0 0 0]);
     Screen('Flip', Sc.window);
+    WaitSecs(1);
     hasconfirmed = false;
     while 1
         [x,y,buttons] = GetMouse;

@@ -1,6 +1,15 @@
+%% dynamicTrials.m
+% Rather than building all trials ahead of time, we check that we have not
+% reached our limit for flips/time, and then add a new trial one at a time.
+
 function [trials, endFlag, subject] = dynamicTrials(vars,trials,subject)
+
+    % Row of trials struct to add to. Incremented after each trial in the
+    % main loop.
     n = subject.numOfTrials;
-        
+    
+    % We need to get the current flips/time and the limit for this trial
+    % type (set in varSet).
     if (strcmp(vars.expLengthMeasure,"flips"))
         y = subject.totalFlips;
         arr = vars.numOfExpFlips;
@@ -9,11 +18,16 @@ function [trials, endFlag, subject] = dynamicTrials(vars,trials,subject)
         arr = vars.numOfExpMinutes*60;
     end
 
+    % From the current flips/time, which trial type are we in?
+    % ie for a current flips/time X and type array [A,B,C].
     if (y < arr(1) && arr(1) ~= 0)
         trials(n).type = vars.expStructure{1};
     elseif (y > arr(1) && y < (arr(1) + arr(2)) && arr(2) ~= 0)
         trials(n).type = vars.expStructure{2};
         if (~strcmp(trials(n-1).type,trials(n).type))
+            % We don't want any excess flips/time to carry out into the
+            % next section, so we set our measure to the minimum amount to
+            % move onto the next trial type.
             subject.totalFlips = arr(1);
             subject.totalTime = arr(1);
         end
@@ -24,6 +38,8 @@ function [trials, endFlag, subject] = dynamicTrials(vars,trials,subject)
             subject.totalTime = arr(1) + arr(2);
         end
     else
+        % Flips/time exceeded the total for the whole experiment. Time to
+        % finish the experiment!
         endFlag = 1;
         return
     end

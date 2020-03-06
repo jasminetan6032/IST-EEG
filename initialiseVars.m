@@ -80,7 +80,8 @@ cfg.instr.instr = {'Right click to confirm'}; % how to respond.
 cfg.instr.finaldecision = {'What is your final decision?'};                 
 cfg.instr.interval      = {'LEFT' 'RIGHT'};
 
-% Defining vars for dynamic experiment length
+% Defining subject measures for dynamic experiment length and
+% post-experiment recording.
 subject.totalFlips = 0;
 subject.totalTime = 0;
 subject.numOfTrials = 1;

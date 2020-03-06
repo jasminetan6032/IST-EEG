@@ -19,18 +19,18 @@ function [vars] = varSet(vars)
     
     % Below field only applicable for trials length generation.
     % How many blocks?
-    vars.numOfExpBlocks = 4;
+    vars.numOfExpBlocks = 10;
     % How many trials per block (before going to a break)? 
-    vars.expBlockLength = 30;
+    vars.expBlockLength = 5;
 
     
     % Trial Types are fixed, decreasing and forced (in this recommended order).
     % Below is the order that these types appear in the experiment and it
     % is recommended to use the default order, but you can change it below.
-    vars.expStructure = {'fixed', 'decreasing', 'forced'}; 
+    vars.expStructure = {'fixed','decreasing', 'forced'}; 
     % Just put zero below if you don't want any of a particular type.
     % Make sure expBlocks values add up to numOfExpBlocks above.
-    vars.expBlocks = [2,2,0];
+    vars.expBlocks = [5,5 ,0];
     vars.trainingLength = 5;
     
     % Below field only applicable for flips length generation.

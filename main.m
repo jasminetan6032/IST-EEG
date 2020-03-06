@@ -56,7 +56,7 @@ else
             cell(1,1),'tileClicked',cell(1,1)));
 end
 
-% startInstructs;
+startInstructs;
 
 % We need to see which experiment we are doing: behavioural or eeg.
 % Behavioural: allow participants to choose while tile to reveal and click
@@ -64,6 +64,13 @@ end
 % EEG: participants control experiment only using left and right mouse
 % clicks without moving mouse in order to reduce eye movements. Also
 % contains triggers for BIOSEMI.
+
+% We also need to see whether we build all trials ahead of time (if
+% experiment length is based on a number of trials) or is dynamic
+% (experiment length is based on flipping a certain number of tiles or a
+% certain length of time).
+
+% Build all trials ahead of time.
 if (strcmp(vars.expLengthMeasure,"trials"))
     if (strcmp(vars.experimentType,'behavioural'))
         for t = 1 : length(trials)
@@ -74,6 +81,7 @@ if (strcmp(vars.expLengthMeasure,"trials"))
             eegLoop;
         end
     end
+% Build trials on the fly.
 else
     endFlag = 0;
     if (strcmp(vars.experimentType,'behavioural'))
@@ -99,9 +107,13 @@ else
     end
 end
 
+% Compute total number of tile flips and total time on experiment for this
+% subject.
 subject.totalFlips = sum([trials.numOfTilesRevealed]);
 subject.totalTime = sum([trials.trialTime]);
 
+
+% Thank the participant.
 insimdata = imread('Instructions/thanks.jpeg');
 texins = Screen('MakeTexture', Sc.window, insimdata);
 Screen('DrawTexture', Sc.window, texins,[],Sc.rect);
