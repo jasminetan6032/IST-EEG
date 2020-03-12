@@ -1,8 +1,10 @@
 %% BehaviouralLoop.m
 % Main trial loop for behavioural experiments.
 
+newConditionInstructs(t,trials,vars,Sc)
+
 SetMouse(centerX, centerY);
-ShowCursor("Arrow");
+ShowCursor();
 % Set any initial values for variables at the start of each trial.
 
 % Keep track of times when each tile is flipped.
@@ -21,14 +23,6 @@ trials(t).trialStart = GetSecs;
 grid = trials(t).trueGrid;
 % We 'hide' each of the colours using a grid of 0s.
 hiddenGrid = zeros(gridX,gridY);
-% Draw the line borders for the grid.
-vars = drawGrid(Sc.window,vars);
-% Draw the box for participants to click on in order to give their
-% final answer.
-drawAnswerBox(Sc.window,answerCoords);
-
-Screen('Flip',Sc.window);
-
 % We keep track of which tiles have been flipped, which colours have been revealed, 
 % how tiles are flipped, and when the user has decided to stop flipping
 % and when they have given their answer. (in below order)
@@ -37,6 +31,15 @@ colourArr = [];
 numOfFlips = 0;
 flipEndFlag = 0;
 answerFlag = 0;
+
+% Draw the line borders for the grid.
+vars = drawGrid(Sc.window,vars,trials,t,1);
+% Draw the box for participants to click on in order to give their
+% final answer.
+drawAnswerBox(Sc.window,answerCoords);
+
+Screen('Flip',Sc.window);
+
 
 % WHEN FLIP OCCURS
 while (flipEndFlag == 0)
@@ -99,7 +102,7 @@ while (flipEndFlag == 0)
                         % Draw all flipped tiles.
                         drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
                         % Redraw grid lines
-                        vars = drawGrid(Sc.window,vars);
+                        vars = drawGrid(Sc.window,vars,trials,t,1);
                         % Box to answer
                         drawAnswerBox(Sc.window,answerCoords);                     
                         Screen('Flip',Sc.window);
@@ -126,7 +129,7 @@ while (flipEndFlag == 0)
 end
 
 drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
-vars = drawGrid(Sc.window,vars);
+vars = drawGrid(Sc.window,vars,trials,t,1);
 % Draw choice of colours for the final decision.
 drawOptions(Sc.window,colours(1,:),colours(2,:),optionCoords)
 Screen('Flip',Sc.window);
@@ -186,8 +189,8 @@ while (answerFlag == 0)
                     else
                         trials(t).correct = 0;
                         trialText = "incorrect!";
-                        points = points - vars.wrongTokenLoss;
-                        trials(t).reward = vars.wrongTokenLoss*-1;
+                        points = points - vars.wrongPointsLoss;
+                        trials(t).reward = vars.wrongPointsLoss*-1;
                     end
                     answerFlag = 1;
                     break;
@@ -212,15 +215,19 @@ subject.totalTime = subject.totalTime + trials(t).trialTime;
 subject.numOfTrials = subject.numOfTrials + 1;
 
 drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
-vars = drawGrid(Sc.window,vars);
+vars = drawGrid(Sc.window,vars,trials,t,1);
 [trials(t).finalCj, trials(t).finalCjTime, ...
 trials(t).cjLoc,trials(t).cjDidRespond] = ...
-cjSlider(Sc,vars,cfg,fillCoords,numOfFlips,colourArr);
+cjSlider(Sc,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,1);
 
 if (trials(t).correct == 0)
     % Audio tone for incorrect answers.
     Beeper(1000,.4,.5);
 end
+
+%Screen('DrawText',Sc.window, trialText,vars.centerX,trialy,[0 0 0]);
+Screen('Flip',Sc.window);
+WaitSecs(1);
 
 if trials(t).break
     save([pwd '/' vars.rawdata_path num2str(subject.id) '/behaviour/' subject.fileName '_' num2str(round(t/vars.expBlockLength))],'trials', 'vars', 'subject', 't');

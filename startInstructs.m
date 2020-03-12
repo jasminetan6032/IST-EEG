@@ -51,16 +51,17 @@ texins = Screen('MakeTexture', Sc.window, insimdata);
 Screen('DrawTexture', Sc.window, texins,[],Sc.rect);
 Screen('Flip',Sc.window);
 WaitSecs(1);
-[x,y,buttons] = GetMouse;
-while 1
+hasconfirmed = false;
+while ~hasconfirmed
+    [x,y,buttons] = GetMouse;
     if(buttons(1)||buttons(2)||buttons(3))
         while 1
             % Wait for mouse release.
             [x,y,buttons] = GetMouse; 
             if(~(buttons(1))&&~(buttons(2))&&~(buttons(3)))
+                hasconfirmed = true;
                 break;
             end
         end
     end
-    break;
 end

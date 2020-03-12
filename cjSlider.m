@@ -1,9 +1,4 @@
-function [cj resp_t interval hasconfirmed] = cjSlider(window,vars,cfg,fillCoords,numOfFlips,colourArr)
-    %% Show mouse pointer
-    SetMouse (window.center(1), window.center(2)+20);
-    ShowCursor('Arrow');
-
-
+function [cj resp_t interval hasconfirmed] = cjSlider(window,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,answered)
     %% initialize variables
     resp = 0; 
     buttons=[]; 
@@ -15,6 +10,10 @@ function [cj resp_t interval hasconfirmed] = cjSlider(window,vars,cfg,fillCoords
 
     % draw scale
     draw_scale_(window,cfg)
+    
+    %% Show mouse pointer
+    SetMouse (window.center(1), window.rect(4)*cfg.bar.positiony);
+    ShowCursor('Arrow');
 
     % draw confidence and interval landmarks
     draw_landmarks(window,cfg,vars)
@@ -42,7 +41,7 @@ function [cj resp_t interval hasconfirmed] = cjSlider(window,vars,cfg,fillCoords
             
             ft = display_response_(window,cfg,[haschanged,resp],vars);
             drawColourTiles(fillCoords,numOfFlips,colourArr,window.window);
-            vars = drawGrid(window.window,vars);
+            vars = drawGrid(window.window,vars,trials,t,answered);
         end
 
         % check for confirmation

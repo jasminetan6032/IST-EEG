@@ -56,7 +56,9 @@ else
             cell(1,1),'tileClicked',cell(1,1)));
 end
 
-startInstructs;
+if (vars.doInstr)
+    startInstructs;
+end
 
 % We need to see which experiment we are doing: behavioural or eeg.
 % Behavioural: allow participants to choose while tile to reveal and click
@@ -107,25 +109,5 @@ else
     end
 end
 
-% Compute total number of tile flips and total time on experiment for this
-% subject.
-subject.totalFlips = sum([trials.numOfTilesRevealed]);
-subject.totalTime = sum([trials.trialTime]);
-
-
-% Thank the participant.
-insimdata = imread('Instructions/thanks.jpeg');
-texins = Screen('MakeTexture', Sc.window, insimdata);
-Screen('DrawTexture', Sc.window, texins,[],Sc.rect);
-Screen('Flip',Sc.window);
-WaitSecs(.25);
-[x,y,buttons] = GetMouse;
-if(buttons(1))
-    while 1
-        % Wait for mouse release.
-        [x,y,buttons] = GetMouse; 
-        if(~(buttons(1)))
-            break;
-        end
-    end
-end
+% End the experiment
+subject = endExp(subject,trials,Sc);

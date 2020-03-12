@@ -1,7 +1,7 @@
 %% drawGrid.m
 % Draw the lines for the IST Grid
 % Size of the grid should change depending on the screen resolution.
-function [vars] = drawGrid(win,vars)
+function [vars] = drawGrid(win,vars,trials,t,answered)
 
     winAreaX = vars.resX;
     winAreaY = vars.resY;
@@ -57,6 +57,16 @@ function [vars] = drawGrid(win,vars)
     Screen('FrameRect',win,[0,0,0],squareCoords,penWidth);
     vars.squareCoords = squareCoords;
     
+    % Below we draw text to tell participants which condition they are in
+    % and in the case of EEG experiment, prompts to remind what left and
+    % right clicking does. The latter is done via the answered argument in
+    % the function handled, but this is always set to 1 when called in the
+    % behavioural experiment. For EEG, we no longer show this on a trial when the
+    % participant has decided to give their answer.
+    if (answered == 0)
+        Screen('DrawText',win,upper(char(strcat("Condition: ", trials(t).type))),(gridCorner1+gridCorner3)/2,gridCorner4*0.1,[0 0 0]);
+        eegOnscreenInstruct(win,vars);
+    end
 %     text = "Click on tiles in the grid to reveal their colour.";
 %     text = [text newline newline "When you are ready to answer, click the Answer button below"];
 %     textY = winAreaY*0.1;

@@ -12,25 +12,29 @@ function [vars] = varSet(vars)
     vars.gridY = 400;
     
     % Set below to 'behavioural' or 'eeg'
-    vars.experimentType = 'eeg';
+    vars.experimentType = 'behavioural';
+    
+    % Setting to skip instructions while debugging
+    vars.doInstr = true;   
     
     % Do we define the length of the experiment by trials, flips or time?
     vars.expLengthMeasure  = 'trials';
     
     % Below field only applicable for trials length generation.
     % How many blocks?
-    vars.numOfExpBlocks = 10;
+    vars.numOfExpBlocks = 3;
     % How many trials per block (before going to a break)? 
-    vars.expBlockLength = 5;
+    vars.expBlockLength = 3;
 
     
     % Trial Types are fixed, decreasing and forced (in this recommended order).
     % Below is the order that these types appear in the experiment and it
     % is recommended to use the default order, but you can change it below.
+    % UPDATE: do not change the below order.
     vars.expStructure = {'fixed','decreasing', 'forced'}; 
     % Just put zero below if you don't want any of a particular type.
     % Make sure expBlocks values add up to numOfExpBlocks above.
-    vars.expBlocks = [5,5 ,0];
+    vars.expBlocks = [1,1,1];
     vars.trainingLength = 5;
     
     % Below field only applicable for flips length generation.
@@ -39,10 +43,8 @@ function [vars] = varSet(vars)
     % Below fields only applicable for time length generation.
     % How long do you want the experiment to be (in minutes) for each trial type?
     vars.numOfExpMinutes = [15,15,15];
-    % NB: minutes and flips are defined across the whole experiment, thus
-    % for each set of trials (ie fixed, creasing or forced), the
-    % minutes/flips are divded across each of these sections according to
-    % the number of blocks allocated to each in var.expBlocks below.
+    % These arays map onto the three experimental types as ordered in
+    % vars.expStructure.
     
     
     % Set points for the fixed and decreasing win conditions.
@@ -63,9 +65,6 @@ function [vars] = varSet(vars)
     vars.colourCode2 = [0.6350 0.0780 0.1840];
     vars.colourCodeN = [0,0,0];
     vars.colourNames = {'orange','red','black'};
-   
-    % Setting to skip instructions while debugging
-    vars.do_instr = true;   
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
