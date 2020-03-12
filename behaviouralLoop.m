@@ -81,23 +81,7 @@ while (flipEndFlag == 0)
                             hiddenGrid(arrayX,arrayY) = 2;
                         end
 
-                        % Add fields for trial breakdown - this allows
-                        % us to see what happens during each trial on a
-                        % flip by flip basis.
-                        trials(t).trialBreakdown(numOfFlips).flipNumber = numOfFlips;
-                        trials(t).trialBreakdown(numOfFlips).colourRevealed = vars.colourNames(grid(arrayX,arrayY));
-                        reducedGrid = nonzeros(hiddenGrid);
-                        trials(t).trialBreakdown(numOfFlips).majorityColour = vars.colourNames(mode(reducedGrid));
-                        trials(t).trialBreakdown(numOfFlips).majorityAmount = sum(reducedGrid==mode(reducedGrid))-sum(reducedGrid~=mode(reducedGrid));
-                        trials(t).trialBreakdown(numOfFlips).majPCorrect = getPcorrect(mode(reducedGrid),reducedGrid,vars);
-                        trials(t).trialBreakdown(numOfFlips).timestamp = flipTimestamps(numOfFlips);
-                        if numOfFlips == 1
-                            trials(t).trialBreakdown(numOfFlips).timeSinceLastFlip = flipTimestamps(1) - trials(t).trialStart;
-                        else
-                            trials(t).trialBreakdown(numOfFlips).timeSinceLastFlip = flipTimestamps(numOfFlips) - flipTimestamps(numOfFlips-1);
-                        end
-                        trials(t).trialBreakdown(numOfFlips).currentGrid = hiddenGrid;
-                        trials(t).trialBreakdown(numOfFlips).tileClicked = [arrayX arrayY];
+                        trialBreakdown;
 
                         % Draw all flipped tiles.
                         drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
@@ -204,54 +188,9 @@ while (answerFlag == 0)
         break;
     end
 end
-% TRIAL OVER
-trials(t).trialEnd = GetSecs;
-trials(t).averageTimeBetweenFlips = mean(flipTimestamps);
-trials(t).trialTime = trials(t).trialEnd - trials(t).trialStart;
-trials(t).totalPoints = points;
 
-subject.totalFlips = subject.totalFlips + numOfFlips;
-subject.totalTime = subject.totalTime + trials(t).trialTime;
-subject.numOfTrials = subject.numOfTrials + 1;
-
-drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
-vars = drawGrid(Sc.window,vars,trials,t,1);
-[trials(t).finalCj, trials(t).finalCjTime, ...
-trials(t).cjLoc,trials(t).cjDidRespond] = ...
-cjSlider(Sc,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,1);
-
-if (trials(t).correct == 0)
-    % Audio tone for incorrect answers.
-    Beeper(1000,.4,.5);
-end
-
-%Screen('DrawText',Sc.window, trialText,vars.centerX,trialy,[0 0 0]);
-Screen('Flip',Sc.window);
-WaitSecs(1);
+trialOver;
 
 if trials(t).break
-    save([pwd '/' vars.rawdata_path num2str(subject.id) '/behaviour/' subject.fileName '_' num2str(round(t/vars.expBlockLength))],'trials', 'vars', 'subject', 't');
-    correct = [trials(1:t).correct];
-    text = ['You currently have ' num2str(points) ' points' newline newline 'Your accuracy up until this point is ' num2str((sum(correct)/t)*100) '%'];
-    text = [text newline newline newline 'You may now take a break. Click on the screen to continue.'];
-    DrawFormattedText(Sc.window, text,'center', 'center', [0 0 0]);
-    Screen('Flip', Sc.window);
-    WaitSecs(1);
-    hasconfirmed = false;
-    while 1
-        [x,y,buttons] = GetMouse;
-        % If mouse button is clicked
-        if(buttons(1))
-            X = x;
-            Y = y;
-            while 1
-                % Wait for mouse release.
-                [x,y,buttons] = GetMouse; 
-                if(~(buttons(1)))
-                    break;
-                end
-            end
-        end
-        break;
-    end
+    trialBreak;
 end

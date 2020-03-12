@@ -12,7 +12,7 @@ function [vars] = varSet(vars)
     vars.gridY = 400;
     
     % Set below to 'behavioural' or 'eeg'
-    vars.experimentType = 'behavioural';
+    vars.experimentType = 'eeg';
     
     % Setting to skip instructions while debugging
     vars.doInstr = true;   
