@@ -29,7 +29,6 @@ tilesCoord(nextToFlip,3) = 1;
 vars = drawGrid(Sc.window,vars,trials,t,0);
 squareCoords = vars.squareCoords;
 Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
-Wait(1)
 Screen('Flip',Sc.window);
 % Time of start of trial.
 trials(t).trialStart = GetSecs;
@@ -43,6 +42,8 @@ while (flipEndFlag == 0)
             % Wait for mouse release.
             [x,y,buttons] = GetMouse; 
             if(~(buttons(1)))
+                %Wait 1 second
+                Wait(1)
                 % Record time when flip occured.
                 flipTimestamps = [flipTimestamps GetSecs];
                 % Increment number of flips for this trial.
