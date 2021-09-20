@@ -22,7 +22,7 @@ function [vars] = varSet(vars)
     
     % Below field only applicable for trials length generation.
     % How many blocks?
-    vars.numOfExpBlocks = 3;
+    vars.numOfExpBlocks = 2;
     % How many trials per block (before going to a break)? 
     vars.expBlockLength = 3;
 
@@ -34,7 +34,7 @@ function [vars] = varSet(vars)
     vars.expStructure = {'fixed','decreasing', 'forced'}; 
     % Just put zero below if you don't want any of a particular type.
     % Make sure expBlocks values add up to numOfExpBlocks above.
-    vars.expBlocks = [1,1,1];
+    vars.expBlocks = [1,1,0];
     vars.trainingLength = 5;
     
     % Below field only applicable for flips length generation.
