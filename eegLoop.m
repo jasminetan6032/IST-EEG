@@ -29,6 +29,7 @@ tilesCoord(nextToFlip,3) = 1;
 vars = drawGrid(Sc.window,vars,trials,t,0);
 squareCoords = vars.squareCoords;
 Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
+Wait(1)
 Screen('Flip',Sc.window);
 % Time of start of trial.
 trials(t).trialStart = GetSecs;
