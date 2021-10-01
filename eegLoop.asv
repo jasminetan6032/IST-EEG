@@ -49,6 +49,7 @@ while (flipEndFlag == 0)
                 flipTimestamps = [flipTimestamps GetSecs];
                 % Increment number of flips for this trial.
                 numOfFlips = numOfFlips + 1;
+                %add trigger for reveal = numOfFlips
                 % For decreasing trials, deduct reward points for flip.
                 decPoints = decPoints - vars.decreasingDec;
                 % Get coordinates of tile that was flipped.
@@ -100,7 +101,7 @@ while (flipEndFlag == 0)
     % Ok, this condition is a bit of mess.
     % This branch is when the participant is giving their answer.
     % We trigger this in two scenarios:
-    % 1. On a fixed or decreasing trial, the right click is pressed AND
+    % 1. On a fixed or decreasing trial, the space bar is pressed AND
     % there is at least one flipped tile on the grid.
     % 2. On a forced trial, the current PCorrect is greater than the
     % average PCorrect when decisions were made during the fixed trials.
@@ -118,6 +119,7 @@ while (flipEndFlag == 0)
     [ keyIsDown, keyTime, keyCode ] = KbCheck;
     if((keyIsDown))&&numOfFlips>0&&~strcmp(trials(t).type,'forced'))||(strcmp(trials(t).type,'forced')&&forcedFlag==1))
         while 1
+            %insert trigger for answer
             % Wait for key release.
             [ keyIsDown, keyTime, keyCode ] = KbCheck;
             if(~(keyIsDown))

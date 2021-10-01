@@ -81,7 +81,6 @@ if (strcmp(vars.expLengthMeasure,"trials"))
         end
     elseif (strcmp(vars.experimentType,'eeg'))
         for t = 1 : length(trials)
-            %insert trigger for trial
             eegLoop;
         end
     end
