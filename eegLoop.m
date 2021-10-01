@@ -44,7 +44,7 @@ while (flipEndFlag == 0)
             [x,y,buttons] = GetMouse;
             if(~(buttons(1)))
                 %Wait 1 second
-                Wait(1)
+                WaitSecs(1)
                 % Record time when flip occured.
                 flipTimestamps = [flipTimestamps GetSecs];
                 % Increment number of flips for this trial.
@@ -114,10 +114,9 @@ while (flipEndFlag == 0)
     % suppress echo to the command line for keypresses
     ListenChar(2);
     
-    % check if a key is pressed
-    % only keys specified in activeKeys are considered valid
+    % check if spacebar is pressed
     [ keyIsDown, keyTime, keyCode ] = KbCheck;
-    if((keyIsDown))&&numOfFlips>0&&~strcmp(trials(t).type,'forced'))||(strcmp(trials(t).type,'forced')&&forcedFlag==1))
+    if((keyIsDown)&&numOfFlips>0&&~strcmp(trials(t).type,'forced')||(strcmp(trials(t).type,'forced')&&forcedFlag==1))
         while 1
             %insert trigger for answer
             % Wait for key release.

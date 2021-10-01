@@ -15,7 +15,7 @@ function [vars] = varSet(vars)
     vars.experimentType = 'eeg';
     
     % Setting to skip instructions while debugging
-    vars.doInstr = true;   
+    vars.doInstr = false;   
     
     % Do we define the length of the experiment by trials, flips or time?
     vars.expLengthMeasure  = 'trials';
