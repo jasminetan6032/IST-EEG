@@ -18,7 +18,7 @@ clc;
 vars.rawdata_path = 'rawdata/';
 
 % Initial questionnaire for subject information.
-[subject] = questionnaire(vars);                              
+[subject] = questionnaire(vars);
 
 % Start timer
 tic
@@ -38,23 +38,23 @@ tic
 % Below script sets the initial value for varibles we need for the
 % experiment.
 initialiseVars;
-    
+
 if (strcmp(vars.expLengthMeasure,'trials'))
     % Generate the struct of trials and cues to be given on each trial.
     [trials] = getTrials(vars);
 else
     
     trials = struct('trialNumber',cell(1,1),...
-    'break',cell(1,1),'type',cell(1,1),'numOfColour1',cell(1,1),'numOfColour2',cell(1,1),...
-    'finalAns',cell(1,1),'finalColour',cell(1,1),'finalPCorrect',cell(1,1),'finalCj',cell(1,1),'finalCjTime',cell(1,1),...
-    'cjLoc',cell(1,1),'cjDidRespond',cell(1,1),'trueAns',cell(1,1),'trueColour',cell(1,1),'correct',cell(1,1),...
-    'numOfTilesRevealed',cell(1,1),'majorityRevealed',cell(1,1),'majorityMargin',cell(1,1),...
-    'trialStart',cell(1,1),'answerTime',cell(1,1),'finalAnswerTime',cell(1,1),'trialEnd',cell(1,1),'trialTime',cell(1,1),...
-    'averageTimeBetweenFlips',cell(1,1),'reward',cell(1,1),'totalPoints',cell(1,1),'trueGrid',...
-    cell(1,1),'trueColourGrid',cell(1,1),'finalGridState',cell(1,1),'trialBreakdown',struct('flipNumber',cell(1,1),'colourRevealed',...
-            cell(1,1),'majorityColour',cell(1,1),'majorityAmount',cell(1,1),'majPCorrect',cell(1,1),...
-            'timestamp',cell(1,1),'timeSinceLastFlip',cell(1,1),'currentGrid',...
-            cell(1,1),'tileClicked',cell(1,1)));
+        'break',cell(1,1),'type',cell(1,1),'numOfColour1',cell(1,1),'numOfColour2',cell(1,1),...
+        'finalAns',cell(1,1),'finalColour',cell(1,1),'finalPCorrect',cell(1,1),'finalCj',cell(1,1),'finalCjTime',cell(1,1),...
+        'cjLoc',cell(1,1),'cjDidRespond',cell(1,1),'trueAns',cell(1,1),'trueColour',cell(1,1),'correct',cell(1,1),...
+        'numOfTilesRevealed',cell(1,1),'majorityRevealed',cell(1,1),'majorityMargin',cell(1,1),...
+        'trialStart',cell(1,1),'answerTime',cell(1,1),'finalAnswerTime',cell(1,1),'trialEnd',cell(1,1),'trialTime',cell(1,1),...
+        'averageTimeBetweenFlips',cell(1,1),'reward',cell(1,1),'totalPoints',cell(1,1),'trueGrid',...
+        cell(1,1),'trueColourGrid',cell(1,1),'finalGridState',cell(1,1),'trialBreakdown',struct('flipNumber',cell(1,1),'colourRevealed',...
+        cell(1,1),'majorityColour',cell(1,1),'majorityAmount',cell(1,1),'majPCorrect',cell(1,1),...
+        'timestamp',cell(1,1),'timeSinceLastFlip',cell(1,1),'currentGrid',...
+        cell(1,1),'tileClicked',cell(1,1)));
 end
 
 if (vars.doInstr)
@@ -73,6 +73,13 @@ end
 % (experiment length is based on flipping a certain number of tiles or a
 % certain length of time).
 
+% if (strcmp(vars.experimentType,'eeg'))
+%     %initialise ioObj
+%     ioObj = io32;
+%     status = io32(ioObj);
+%     address = hex2dec('378');
+% end
+
 % Build all trials ahead of time.
 if (strcmp(vars.expLengthMeasure,"trials"))
     if (strcmp(vars.experimentType,'behavioural'))
@@ -81,11 +88,16 @@ if (strcmp(vars.expLengthMeasure,"trials"))
         end
     elseif (strcmp(vars.experimentType,'eeg'))
         for t = 1 : length(trials)
-            %insert trigger for trial
+            %             % trigger for start of stimuli
+            %             trigger = 100 + t;
+            %             io32(ioObj,address,trigger);
+            %             WaitSecs(0.001);
+            %             io32(ioObj,address,0);
+            
             eegLoop;
         end
     end
-% Build trials on the fly.
+    % Build trials on the fly.
 else
     endFlag = 0;
     if (strcmp(vars.experimentType,'behavioural'))
@@ -105,6 +117,12 @@ else
                 break;
             else
                 t = subject.numOfTrials;
+                %             % trigger for start of stimuli
+                %             trigger = 100 + t;
+                %             io32(ioObj,address,trigger);
+                %             WaitSecs(0.001);
+                %             io32(ioObj,address,0);
+                
                 eegLoop;
             end
         end

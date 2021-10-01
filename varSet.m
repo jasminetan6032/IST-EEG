@@ -18,7 +18,7 @@ function [vars] = varSet(vars)
     vars.doInstr = false;   
     
     % Do we define the length of the experiment by trials, flips or time?
-    vars.expLengthMeasure  = 'trials';
+    vars.expLengthMeasure  = 'time';
     
     % Below field only applicable for trials length generation.
     % How many blocks?
@@ -42,7 +42,7 @@ function [vars] = varSet(vars)
     vars.numOfExpFlips = [100,100,0];
     % Below fields only applicable for time length generation.
     % How long do you want the experiment to be (in minutes) for each trial type?
-    vars.numOfExpMinutes = [15,15,15];
+    vars.numOfExpMinutes = [3,3,0];
     % These arays map onto the three experimental types as ordered in
     % vars.expStructure.
     
