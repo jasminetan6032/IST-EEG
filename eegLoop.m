@@ -40,6 +40,7 @@ while (flipEndFlag == 0)
     if(buttons(1))
         while 1
             %add trigger for flip
+            sendTrig(numOfFlips,useport);
             % Wait for mouse release.
             [x,y,buttons] = GetMouse;
             if(~(buttons(1)))
@@ -49,7 +50,7 @@ while (flipEndFlag == 0)
                 flipTimestamps = [flipTimestamps GetSecs];
                 % Increment number of flips for this trial.
                 numOfFlips = numOfFlips + 1;
-                %add trigger for reveal = numOfFlips
+                %add trigger for reveal = numOfFlips (necessary?)
                 % For decreasing trials, deduct reward points for flip.
                 decPoints = decPoints - vars.decreasingDec;
                 % Get coordinates of tile that was flipped.
@@ -119,6 +120,7 @@ while (flipEndFlag == 0)
     if((keyIsDown)&&numOfFlips>0&&~strcmp(trials(t).type,'forced')||(strcmp(trials(t).type,'forced')&&forcedFlag==1))
         while 1
             %insert trigger for answer
+            sendTrig(99,useport);
             % Wait for key release.
             [ keyIsDown, keyTime, keyCode ] = KbCheck;
             if(~(keyIsDown))
