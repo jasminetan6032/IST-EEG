@@ -100,7 +100,7 @@ while (flipEndFlag == 0)
                         Screen('Flip',Sc.window);
                     end
                     
-                    while numOfFlips == 25
+                    if numOfFlips == 25
                         KbName('UnifyKeyNames');
                         % specify key names of interest in the study
                         activeKeys = [KbName('space')];
@@ -110,15 +110,29 @@ while (flipEndFlag == 0)
                         
                         % check if spacebar is pressed
                         [ keyIsDown, keyTime, keyCode ] = KbCheck;
-                        if(keyIsDown)
+                        if((keyIsDown)&&numOfFlips>0&&~strcmp(trials(t).type,'forced')||flip25Flag==1)
                             while 1
                                 %insert trigger for answer
                                 %             sendTrig(99,useport);
                                 % Wait for key release.
                                 [ keyIsDown, keyTime, keyCode ] = KbCheck;
                                 if(~(keyIsDown))
-                                    % Breaks us out of the loop of flipping and sends us to answer.
-                                    flip25Flag = 1;
+                                    % Record what the grid looks like when the decision was
+                                    % made.
+                                    trials(t).finalGridState = hiddenGrid;
+                                    hiddenGrid = nonzeros(hiddenGrid);
+                                    % See what the most prevalent colour and what amount in the
+                                    % final grid state that the participant could see.
+                                    trials(t).majorityMargin = sum(hiddenGrid==mode(hiddenGrid))-sum(hiddenGrid~=mode(hiddenGrid));
+                                    if (trials(t).majorityMargin == 0)
+                                        trials(t).majorityRevealed = 'neither';
+                                    else
+                                        trials(t).majorityRevealed = vars.colourNames(mode(hiddenGrid));
+                                    end
+                                    % PCorrect at decision point.
+                                    trials(t).finalPCorrect = getPcorrect(mode(hiddenGrid),trials(t).finalGridState,vars);
+                                    % Breaks us out of the loop of flipping.
+                                    flipEndFlag = 1;
                                     break;
                                 end
                             end
@@ -130,8 +144,7 @@ while (flipEndFlag == 0)
                         % re-enable echo to the command line for key presses
                         % if code crashes before reaching this point
                         % CTRL-C will reenable keyboard input
-                        ListenChar(1);
-                        break;
+                        ListenChar(1)
                     end
                     break;
                 end

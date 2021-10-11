@@ -86,6 +86,6 @@ subject.totalFlips = 0;
 subject.totalTime = 0;
 subject.numOfTrials = 1;
 
-if (strcmp(vars.experimentType,'eeg'))
-    useport = pairStimtoEEG;
-end
+% if (strcmp(vars.experimentType,'eeg'))
+%     useport = pairStimtoEEG;
+% end

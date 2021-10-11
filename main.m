@@ -1,4 +1,4 @@
-%% Information Sampling Tascask for EEG %%%%%%%%%%%
+%% Information Sampling Task for EEG %%%%%%%%%%%
 % Author - Sriraj Aiyer
 % Contact - sriraj.aiyer@psy.ox.ac.uk
 
@@ -83,13 +83,13 @@ if (strcmp(vars.expLengthMeasure,"trials"))
     elseif (strcmp(vars.experimentType,'eeg'))
         for t = 1 : length(trials)
             % trigger for start of stimuli
-            trigger = 100 + t;
-            sendTrig(trigger,useport);
-            if (strcmp(trials.type, 'fixed'))
-                sendTrig(100,useport)
-            elseif (strcmp(trials.type, 'descending'))
-                sendTrig(200,useport)
-            end
+%             trigger = 100 + t;
+%             sendTrig(trigger,useport);
+%             if (strcmp(trials.type, 'fixed'))
+%                 sendTrig(100,useport)  
+%             elseif (strcmp(trials.type, 'descending'))
+%                 sendTrig(200,useport)
+%             end
             
             eegLoop;
         end
@@ -115,8 +115,8 @@ else
             else
                 t = subject.numOfTrials;
                 % trigger for start of stimuli
-                trigger = 100 + t;
-                sendTrig(trigger,useport);
+%                 trigger = 100 + t;
+%                 sendTrig(trigger,useport);
                 
                 eegLoop;
             end
