@@ -100,44 +100,12 @@ while (flipEndFlag == 0)
                         Screen('Flip',Sc.window);
                     end
                     
-                    while numOfFlips == 25
-                        KbName('UnifyKeyNames');
-                        % specify key names of interest in the study
-                        activeKeys = [KbName('space')];
-                        RestrictKeysForKbCheck(activeKeys);
-                        % suppress echo to the command line for keypresses
-                        ListenChar(2);
-                        
-                        % check if spacebar is pressed
-                        [ keyIsDown, keyTime, keyCode ] = KbCheck;
-                        if(keyIsDown)
-                            while 1
-                                %insert trigger for answer
-                                %             sendTrig(99,useport);
-                                % Wait for key release.
-                                [ keyIsDown, keyTime, keyCode ] = KbCheck;
-                                if(~(keyIsDown))
-                                    % Breaks us out of the loop of flipping and sends us to answer.
-                                    flip25Flag = 1;
-                                    break;
-                                end
-                            end
-                        end
-                        % if the wait for presses is in a loop,
-                        % then the following two commands should come after the loop finishes
-                        % reset the keyboard input checking for all keys
-                        RestrictKeysForKbCheck;
-                        % re-enable echo to the command line for key presses
-                        % if code crashes before reaching this point
-                        % CTRL-C will reenable keyboard input
-                        ListenChar(1);
-                        break;
+                    if numOfFlips == 25
+                        flipEndFlag = 1;
                     end
                     break;
                 end
             end
-            %         else
-            %             flipEndFlag = 1;
         end
     end
     % Ok, this condition is a bit of mess.
