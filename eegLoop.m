@@ -37,77 +37,113 @@ trials(t).trialStart = GetSecs;
 % WHEN FLIP OCCURS
 while (flipEndFlag == 0)
     [x,y,buttons] = GetMouse;
-    % If left mouse button is clicked
-    if(buttons(1))
-        if numOfFlips < 25
-            while 1
-                %add trigger for flip
-                %sendTrig(numOfFlips,useport);
-                % Wait for mouse release.
-                [x,y,buttons] = GetMouse;
-                if(~(buttons(1)))
-                    %Wait 1 second
-                    WaitSecs(1)
-                    % Record time when flip occured.
-                    flipTimestamps = [flipTimestamps GetSecs];
-                    % Increment number of flips for this trial.
-                    numOfFlips = numOfFlips + 1;
-                    %add trigger for reveal = numOfFlips (necessary?)
-                    % For decreasing trials, deduct reward points for flip.
-                    decPoints = decPoints - vars.decreasingDec;
-                    % Get coordinates of tile that was flipped.
-                    arrayY = tilesCoord(nextToFlip,1);
-                    arrayX = tilesCoord(nextToFlip,2);
-                    % Add this tile to the array of flipped tiles, used in the
-                    % drawColourTiles function.
-                    fillCoords(numOfFlips,:) = squareCoords(:,nextToFlip)';
-                    % Get the colour of the flipped tile to paint it.
-                    if (grid(arrayX,arrayY) == 1)
-                        colourArr(numOfFlips,:) = colours(1,:);
-                        hiddenGrid(arrayX,arrayY) = 1;
-                    else
-                        colourArr(numOfFlips,:) = colours(2,:);
-                        hiddenGrid(arrayX,arrayY) = 2;
-                    end
-                    % Draw the new flipped tile and all tiles flipped up to
-                    % this point in the trial.
-                    drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
-                    % Redraw the grid.
-                    vars = drawGrid(Sc.window,vars,trials,t,0);
-                    % Get the next tile that will be flipped.
-                    % This while loop forces that we keep randomly picking a
-                    % tile until we get one that has not been flipped already.
-                    nextToFlip = ceil(rand*25);
-                    while (tilesCoord(nextToFlip,3) == 1)&& numOfFlips < 25
-                        nextToFlip = ceil(rand*25);
-                    end
-                    tilesCoord(nextToFlip,3) = 1;
-                    
-                    trialBreakdown;
-                    
-                    % If this variable exists, it means we can set the point
-                    % where participants are forced to respond on Forced
-                    % trials.
-                    if (exist('forcedPLevel','var') == 1)
-                        if (forcedPLevel < trials(t).trialBreakdown(numOfFlips).majPCorrect)
-                            forcedFlag = 1;
-                        end
-                    end
-                    
-                    if numOfFlips < 25
-                        % Colour the next tile to be flipped black.
-                        Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
-                        Screen('Flip',Sc.window);
-                    end
-                    
-                    if numOfFlips == 25
-                        flipEndFlag = 1;
-                    end
-                    break;
+    % If left mouse button is clicked and number of flips is not 25
+    if(buttons(1) && (numOfFlips < 24))
+        while 1
+            %add trigger for flip
+            %sendTrig(numOfFlips,useport);
+            % Wait for mouse release.
+            [x,y,buttons] = GetMouse;
+            if(~(buttons(1)))
+                %Wait 1 second
+                WaitSecs(1)
+                % Record time when flip occured.
+                flipTimestamps = [flipTimestamps GetSecs];
+                % Increment number of flips for this trial.
+                numOfFlips = numOfFlips + 1;
+                %add trigger for reveal = numOfFlips (necessary?)
+                % For decreasing trials, deduct reward points for flip.
+                decPoints = decPoints - vars.decreasingDec;
+                % Get coordinates of tile that was flipped.
+                arrayY = tilesCoord(nextToFlip,1);
+                arrayX = tilesCoord(nextToFlip,2);
+                % Add this tile to the array of flipped tiles, used in the
+                % drawColourTiles function.
+                fillCoords(numOfFlips,:) = squareCoords(:,nextToFlip)';
+                % Get the colour of the flipped tile to paint it.
+                if (grid(arrayX,arrayY) == 1)
+                    colourArr(numOfFlips,:) = colours(1,:);
+                    hiddenGrid(arrayX,arrayY) = 1;
+                else
+                    colourArr(numOfFlips,:) = colours(2,:);
+                    hiddenGrid(arrayX,arrayY) = 2;
                 end
+                % Draw the new flipped tile and all tiles flipped up to
+                % this point in the trial.
+                drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
+                % Redraw the grid.
+                vars = drawGrid(Sc.window,vars,trials,t,0);
+                % Get the next tile that will be flipped.
+                % This while loop forces that we keep randomly picking a
+                % tile until we get one that has not been flipped already.
+                nextToFlip = ceil(rand*25);
+                while (tilesCoord(nextToFlip,3) == 1)&& numOfFlips < 25
+                    nextToFlip = ceil(rand*25);
+                end
+                tilesCoord(nextToFlip,3) = 1;
+                
+                trialBreakdown;
+                
+                % If this variable exists, it means we can set the point
+                % where participants are forced to respond on Forced
+                % trials.
+                if (exist('forcedPLevel','var') == 1)
+                    if (forcedPLevel < trials(t).trialBreakdown(numOfFlips).majPCorrect)
+                        forcedFlag = 1;
+                    end
+                end
+                
+                % Colour the next tile to be flipped black.
+                Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
+                Screen('Flip',Sc.window);
+                
+                
+                break;
             end
         end
     end
+    
+    if(buttons(1) && (numOfFlips == 24))
+        while 1
+            %add trigger for flip
+            %sendTrig(numOfFlips,useport);
+            % Wait for mouse release.
+            [x,y,buttons] = GetMouse;
+            if(~(buttons(1)))
+                %Wait 1 second
+                WaitSecs(1)
+                % Record time when flip occured.
+                flipTimestamps = [flipTimestamps GetSecs];
+                % Increment number of flips for this trial.
+                numOfFlips = numOfFlips + 1;
+                %add trigger for reveal = numOfFlips (necessary?)
+                % For decreasing trials, deduct reward points for flip.
+                decPoints = decPoints - vars.decreasingDec;
+                % Get coordinates of tile that was flipped.
+                arrayY = tilesCoord(nextToFlip,1);
+                arrayX = tilesCoord(nextToFlip,2);
+                % Add this tile to the array of flipped tiles, used in the
+                % drawColourTiles function.
+                fillCoords(numOfFlips,:) = squareCoords(:,nextToFlip)';
+                % Get the colour of the flipped tile to paint it.
+                if (grid(arrayX,arrayY) == 1)
+                    colourArr(numOfFlips,:) = colours(1,:);
+                    hiddenGrid(arrayX,arrayY) = 1;
+                else
+                    colourArr(numOfFlips,:) = colours(2,:);
+                    hiddenGrid(arrayX,arrayY) = 2;
+                end
+                % Draw the new flipped tile and all tiles flipped up to
+                % this point in the trial.
+                drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
+                % Redraw the grid.
+                vars = drawGrid(Sc.window,vars,trials,t,0);
+                Screen('Flip',Sc.window);
+                break
+            end
+        end
+    end
+    
     % Ok, this condition is a bit of mess.
     % This branch is when the participant is giving their answer.
     % We trigger this in two scenarios:
