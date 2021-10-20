@@ -104,6 +104,10 @@ while (flipEndFlag == 0)
                 Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
                 %trigger for flip
                 Screen('Flip',Sc.window);
+                %                 if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
+                %                     sendTrig(1,useport)
+                %                 else sendTrig(2,useport)
+                %                 end
                 
                 for n = 1:length(cjsamples)
                     if numOfFlips == cjsamples(n)
@@ -158,7 +162,12 @@ while (flipEndFlag == 0)
                 % Redraw the grid.
                 vars = drawGrid(Sc.window,vars,trials,t,0);
                 Screen('Flip',Sc.window);
-                %add trigger for reveal 
+                %add trigger for reveal
+                %                 if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
+                %                     sendTrig(1,useport)
+                %                 else sendTrig(2,useport)
+                %                 end
+                
                 break
             end
         end
