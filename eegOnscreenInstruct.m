@@ -1,6 +1,6 @@
 %% eegOnscreenInstruct.m
 % Draw boxes and text to remind participants for the EEG version of the
-% experiment that left click flips a tile, right click means the
+% experiment that left click flips a tile, pressing the spacebar means the
 % participant is choosing to answer. 
 function eegOnscreenInstruct(win,vars)
     %Draw response boxes on screen:

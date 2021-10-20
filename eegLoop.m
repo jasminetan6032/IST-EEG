@@ -22,6 +22,13 @@ answerFlag = 0;
 forcedFlag = 0;
 flip25Flag = 0;
 
+cjsamples = [];
+cjsamples(1) = randi([1 5]);
+cjsamples(2) = randi([6 10]);
+cjsamples(3) = randi([11 15]);
+cjsamples(4) = randi([16 20]);
+cjsamples(5) = randi([21 25]);
+
 nextToFlip = ceil(rand*25);
 while (tilesCoord(nextToFlip,3) == 1)
     nextToFlip = ceil(rand*25);
@@ -95,8 +102,21 @@ while (flipEndFlag == 0)
                 
                 % Colour the next tile to be flipped black.
                 Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
+                %trigger for flip
                 Screen('Flip',Sc.window);
                 
+                for n = 1:length(cjsamples)
+                    if numOfFlips == cjsamples(n)
+                        drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window);
+                        vars = drawGrid(Sc.window,vars,trials,t,1);
+                        [trials(t).trialBreakdown(numOfFlips).Cjsample, trials(t).trialBreakdown(numOfFlips).CjsampleTime, ...
+                            trials(t).trialBreakdown(numOfFlips).cjLoc,trials(t).trialBreakdown(numOfFlips).cjDidRespond] = ...
+                            cjSlider(Sc,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,1);
+                        Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
+                        vars = drawGrid(Sc.window,vars,trials,t,0);
+                        Screen('Flip',Sc.window);
+                    end
+                end
                 
                 break;
             end
@@ -116,7 +136,6 @@ while (flipEndFlag == 0)
                 flipTimestamps = [flipTimestamps GetSecs];
                 % Increment number of flips for this trial.
                 numOfFlips = numOfFlips + 1;
-                %add trigger for reveal = numOfFlips (necessary?)
                 % For decreasing trials, deduct reward points for flip.
                 decPoints = decPoints - vars.decreasingDec;
                 % Get coordinates of tile that was flipped.
@@ -139,6 +158,7 @@ while (flipEndFlag == 0)
                 % Redraw the grid.
                 vars = drawGrid(Sc.window,vars,trials,t,0);
                 Screen('Flip',Sc.window);
+                %add trigger for reveal 
                 break
             end
         end
