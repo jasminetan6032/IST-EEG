@@ -21,6 +21,7 @@ flipEndFlag = 0;
 answerFlag = 0;
 forcedFlag = 0;
 flip25Flag = 0;
+cjSampleFlag = 0;
 
 cjsamples = [];
 cjsamples(1) = randi([1 5]);
@@ -58,7 +59,7 @@ while (flipEndFlag == 0)
                 flipTimestamps = [flipTimestamps GetSecs];
                 % Increment number of flips for this trial.
                 numOfFlips = numOfFlips + 1;
-                %add trigger for reveal = numOfFlips (necessary?)
+                cjSampleFlag = 0;
                 % For decreasing trials, deduct reward points for flip.
                 decPoints = decPoints - vars.decreasingDec;
                 % Get coordinates of tile that was flipped.
@@ -119,6 +120,7 @@ while (flipEndFlag == 0)
                         Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
                         vars = drawGrid(Sc.window,vars,trials,t,0);
                         Screen('Flip',Sc.window);
+                        cjSampleFlag = 1;
                     end
                 end
                 
@@ -300,8 +302,12 @@ while (answerFlag == 0)
         end
     end
 end
-trialOver;
-
+ if cSampleFlag == 1
+     trialOverNoCj;
+ else
+     trialOver;
+ end
+ 
 if trials(t).break
     trialBreak;
 end
