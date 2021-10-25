@@ -49,7 +49,8 @@ while (flipEndFlag == 0)
     if(buttons(1) && (numOfFlips < 24))
         while 1
             %add trigger for flip
-            %sendTrig(numOfFlips,useport);
+            trigger_flip = numOfFlips + 1;
+            sendTrig(trigger_flip,useport);
             % Wait for mouse release.
             [x,y,buttons] = GetMouse;
             if(~(buttons(1)))
@@ -105,10 +106,10 @@ while (flipEndFlag == 0)
                 Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
                 %trigger for flip
                 Screen('Flip',Sc.window);
-                %                 if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
-                %                     sendTrig(1,useport)
-                %                 else sendTrig(2,useport)
-                %                 end
+                                if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
+                                    sendTrig(31,useport);
+                                else sendTrig(32,useport);
+                                end
                 
                 for n = 1:length(cjsamples)
                     if numOfFlips == cjsamples(n)
@@ -132,7 +133,8 @@ while (flipEndFlag == 0)
     if(buttons(1) && (numOfFlips == 24))
         while 1
             %add trigger for flip
-            %sendTrig(numOfFlips,useport);
+            trigger_flip25 = 25;
+            sendTrig(trigger_flip25,useport);
             % Wait for mouse release.
             [x,y,buttons] = GetMouse;
             if(~(buttons(1)))
@@ -165,10 +167,10 @@ while (flipEndFlag == 0)
                 vars = drawGrid(Sc.window,vars,trials,t,0);
                 Screen('Flip',Sc.window);
                 %add trigger for reveal
-                %                 if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
-                %                     sendTrig(1,useport)
-                %                 else sendTrig(2,useport)
-                %                 end
+                                if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
+                                    sendTrig(31,useport)
+                                else sendTrig(32,useport)
+                                end
                 
                 break
             end
@@ -196,7 +198,7 @@ while (flipEndFlag == 0)
     if((keyIsDown)&&numOfFlips>0&&~strcmp(trials(t).type,'forced')||flip25Flag==1)
         while 1
             %insert trigger for answer
-            %             sendTrig(99,useport);
+                        sendTrig(99,useport);
             % Wait for key release.
             [ keyIsDown, keyTime, keyCode ] = KbCheck;
             if(~(keyIsDown))
