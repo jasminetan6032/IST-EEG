@@ -119,7 +119,7 @@ else
 %             sendTrig(trigger,useport);
             if (strcmp(trials(t).type, 'fixed'))
                 sendTrig(100,useport)  
-            elseif (strcmp(trials(t).type, 'descending'))
+            elseif (strcmp(trials(t).type, 'decreasing'))
                 sendTrig(200,useport)
             end
                 
