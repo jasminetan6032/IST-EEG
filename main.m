@@ -117,9 +117,9 @@ else
                 % trigger for start of stimuli
 %             trigger = 100 + t;
 %             sendTrig(trigger,useport);
-            if (strcmp(trials.type, 'fixed'))
+            if (strcmp(trials(t).type, 'fixed'))
                 sendTrig(100,useport)  
-            elseif (strcmp(trials.type, 'descending'))
+            elseif (strcmp(trials(t).type, 'descending'))
                 sendTrig(200,useport)
             end
                 
