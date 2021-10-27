@@ -20,9 +20,9 @@ numOfFlips = 0;
 flipEndFlag = 0;
 answerFlag = 0;
 forcedFlag = 0;
-flip25Flag = 0;
 cjSampleFlag = 0;
 
+%creates random sampling of confidence every 5 flips
 cjsamples = [];
 cjsamples(1) = randi([1 5]);
 cjsamples(2) = randi([6 10]);
@@ -60,6 +60,8 @@ while (flipEndFlag == 0)
                 flipTimestamps = [flipTimestamps GetSecs];
                 % Increment number of flips for this trial.
                 numOfFlips = numOfFlips + 1;
+                %Re-initialise cjSampleFlag (in case it was called after
+                %the last flip
                 cjSampleFlag = 0;
                 % For decreasing trials, deduct reward points for flip.
                 decPoints = decPoints - vars.decreasingDec;
@@ -104,7 +106,8 @@ while (flipEndFlag == 0)
                 
                 % Colour the next tile to be flipped black.
                 Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
-                %trigger for flip
+                %trigger for colour reveal: 
+                %31 for majority colour, 32 for minority colour
                 Screen('Flip',Sc.window);
                 if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
                     sendTrig(31,useport);
@@ -112,16 +115,19 @@ while (flipEndFlag == 0)
                     sendTrig(32,useport);
                 end
                 
+                %check if confidence should be randomly sampled
                 for n = 1:length(cjsamples)
                     if numOfFlips == cjsamples(n)
                         drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window);
                         vars = drawGrid(Sc.window,vars,trials,t,1);
+                        %collect confidence sample
                         [trials(t).trialBreakdown(numOfFlips).Cjsample, trials(t).trialBreakdown(numOfFlips).CjsampleTime, ...
                             trials(t).trialBreakdown(numOfFlips).cjLoc,trials(t).trialBreakdown(numOfFlips).cjDidRespond] = ...
                             cjSlider(Sc,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,1);
                         Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
                         vars = drawGrid(Sc.window,vars,trials,t,0);
                         Screen('Flip',Sc.window);
+                        %note that confidence sample was collected
                         cjSampleFlag = 1;
                     end
                 end
@@ -133,8 +139,7 @@ while (flipEndFlag == 0)
     
     if(buttons(1) && (numOfFlips == 24))
         %add trigger for flip
-        trigger_flip25 = 25;
-        sendTrig(trigger_flip25,useport);
+        sendTrig(25,useport);
         while 1
             % Wait for mouse release.
             [x,y,buttons] = GetMouse;
@@ -145,6 +150,7 @@ while (flipEndFlag == 0)
                 flipTimestamps = [flipTimestamps GetSecs];
                 % Increment number of flips for this trial.
                 numOfFlips = numOfFlips + 1;
+                cjSampleFlag = 0;
                 % For decreasing trials, deduct reward points for flip.
                 decPoints = decPoints - vars.decreasingDec;
                 % Get coordinates of tile that was flipped.
@@ -168,7 +174,8 @@ while (flipEndFlag == 0)
                 vars = drawGrid(Sc.window,vars,trials,t,0);
                 trialBreakdown;
                 Screen('Flip',Sc.window);
-                %add trigger for reveal
+                %add trigger for colour reveal
+                %31 is majority colour, 32 is minority colour
                 if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
                     sendTrig(31,useport);
                 else
@@ -198,7 +205,7 @@ while (flipEndFlag == 0)
     
     % check if spacebar is pressed
     [ keyIsDown, keyTime, keyCode ] = KbCheck;
-    if((keyIsDown)&&numOfFlips>0&&~strcmp(trials(t).type,'forced')||flip25Flag==1)
+    if((keyIsDown)&&numOfFlips>0&&~strcmp(trials(t).type,'forced'))
         while 1
             %insert trigger for answer
             sendTrig(99,useport);
