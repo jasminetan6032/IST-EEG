@@ -31,10 +31,10 @@ function [vars] = varSet(vars)
     % Below is the order that these types appear in the experiment and it
     % is recommended to use the default order, but you can change it below.
     % UPDATE: do not change the below order.
-    vars.expStructure = {'fixed','decreasing', 'forced'}; 
+    vars.expStructure = {'fixed','decreasing'}; 
     % Just put zero below if you don't want any of a particular type.
     % Make sure expBlocks values add up to numOfExpBlocks above.
-    vars.expBlocks = [1,1,0];
+%     vars.expBlocks = [1,1,0];
     vars.trainingLength = 5;
     
     % Below field only applicable for flips length generation.
@@ -43,9 +43,7 @@ function [vars] = varSet(vars)
     % Below fields only applicable for time length generation.
     % How long do you want the experiment to be (in minutes) for each trial type?
     %Total length of experiment
-    vars.numOfExpMinutes = [3,3,0];
-    % These arays map onto the three experimental types as ordered in
-    % vars.expStructure.
+    vars.numOfExpMinutes = 5;
     
     
     % Set points for the fixed and decreasing win conditions.
