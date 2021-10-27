@@ -21,7 +21,7 @@ function [cj resp_t interval hasconfirmed] = cjSlider(window,vars,cfg,fillCoords
     %% collect response
     while ~any(buttons) % wait for click
         [x,y,buttons] = GetMouse;
-        %add trigger for confidence rating
+        %add trigger for confidence rati
     end
     while ~hasconfirmed
         while any(buttons)||~haschanged   % wait for release and change of cj and confirmation
@@ -50,7 +50,6 @@ function [cj resp_t interval hasconfirmed] = cjSlider(window,vars,cfg,fillCoords
         if ~hasconfirmed
             [x,y,buttons] = GetMouse;
             if (buttons(2)||buttons(3))
-                %add trigger for confirmation
                 while 1
                     % Wait for mouse release.
                     [x,y,buttons] = GetMouse; 

@@ -113,11 +113,11 @@ else
             else
                 t = subject.numOfTrials;
                 % trigger for start of stimuli
-%             if (strcmp(trials(t).type, 'fixed'))
-%                 sendTrig(100,useport)  
-%             elseif (strcmp(trials(t).type, 'decreasing'))
-%                 sendTrig(200,useport)
-%             end
+            if (strcmp(trials(t).type, 'fixed'))
+                sendTrig(100,useport)  
+            elseif (strcmp(trials(t).type, 'decreasing'))
+                sendTrig(200,useport)
+            end
                 
                 eegLoop;
             end
