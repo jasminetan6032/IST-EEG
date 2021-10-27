@@ -35,7 +35,7 @@ tic
 %     starttrial=1;
 % end
 
-% Below script sets the initial value for varibles we need for the
+% Below script sets the initial value for variables we need for the
 % experiment.
 initialiseVars;
 
@@ -83,8 +83,6 @@ if (strcmp(vars.expLengthMeasure,"trials"))
     elseif (strcmp(vars.experimentType,'eeg'))
         for t = 1 : length(trials)
             % trigger for start of stimuli
-%             trigger = 100 + t;
-%             sendTrig(trigger,useport);
 %             if (strcmp(trials.type, 'fixed'))
 %                 sendTrig(100,useport)  
 %             elseif (strcmp(trials.type, 'descending'))
@@ -115,13 +113,11 @@ else
             else
                 t = subject.numOfTrials;
                 % trigger for start of stimuli
-%             trigger = 100 + t;
-%             sendTrig(trigger,useport);
-            if (strcmp(trials.type, 'fixed'))
-                sendTrig(100,useport)  
-            elseif (strcmp(trials.type, 'descending'))
-                sendTrig(200,useport)
-            end
+%             if (strcmp(trials(t).type, 'fixed'))
+%                 sendTrig(100,useport)  
+%             elseif (strcmp(trials(t).type, 'decreasing'))
+%                 sendTrig(200,useport)
+%             end
                 
                 eegLoop;
             end
