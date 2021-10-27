@@ -86,9 +86,9 @@ subject.totalFlips = 0;
 subject.totalTime = 0;
 subject.numOfTrials = 1;
 if mod(subject.id,2) == 0
-    subject.blockCondition = vars.expStructure{1};
+    subject.blockCondition = vars.expStructure{1}
 else
-    subject.blockCondition = vars.expStructure{2};
+    subject.blockCondition = vars.expStructure{2}
 end
 
 % if (strcmp(vars.experimentType,'eeg'))
