@@ -91,6 +91,6 @@ else
     subject.blockCondition = vars.expStructure{2};
 end
 
-if (strcmp(vars.experimentType,'eeg'))
-    useport = pairStimtoEEG;
-end
+% if (strcmp(vars.experimentType,'eeg'))
+%     useport = pairStimtoEEG;
+% end

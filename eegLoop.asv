@@ -48,8 +48,8 @@ while (flipEndFlag == 0)
     % If left mouse button is clicked and number of flips is not 25
     if(buttons(1) && (numOfFlips < 24))
         %add trigger for flip
-        trigger_flip = numOfFlips + 1;
-        sendTrig(trigger_flip,useport);
+%         trigger_flip = numOfFlips + 1;
+%         sendTrig(trigger_flip,useport);
         while 1
             % Wait for mouse release.
             [x,y,buttons] = GetMouse;
@@ -60,7 +60,7 @@ while (flipEndFlag == 0)
                 flipTimestamps = [flipTimestamps GetSecs];
                 % Increment number of flips for this trial.
                 numOfFlips = numOfFlips + 1;
-                %Re-initialise cjSampleFlag (in case it was called after
+                %Re-initialise cjSampleFlag in case it was called after
                 %the last flip
                 cjSampleFlag = 0;
                 % For decreasing trials, deduct reward points for flip.
@@ -84,38 +84,19 @@ while (flipEndFlag == 0)
                 drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
                 % Redraw the grid.
                 vars = drawGrid(Sc.window,vars,trials,t,0);
-                % Get the next tile that will be flipped.
-                % This while loop forces that we keep randomly picking a
-                % tile until we get one that has not been flipped already.
-                nextToFlip = ceil(rand*25);
-                while (tilesCoord(nextToFlip,3) == 1)&& numOfFlips < 25
-                    nextToFlip = ceil(rand*25);
-                end
-                tilesCoord(nextToFlip,3) = 1;
+                %trigger for colour reveal
+                %31 for majority colour, 32 for minority colour
+                Screen('Flip',Sc.window);
+%                 if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
+%                     sendTrig(31,useport);
+%                 else
+%                     sendTrig(32,useport);
+%                 end
+                WaitSecs(1);
                 
                 trialBreakdown;
                 
-                % If this variable exists, it means we can set the point
-                % where participants are forced to respond on Forced
-                % trials.
-                if (exist('forcedPLevel','var') == 1)
-                    if (forcedPLevel < trials(t).trialBreakdown(numOfFlips).majPCorrect)
-                        forcedFlag = 1;
-                    end
-                end
-                
-                % Colour the next tile to be flipped black.
-                Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
-                %trigger for colour reveal: 
-                %31 for majority colour, 32 for minority colour
-                Screen('Flip',Sc.window);
-                if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
-                    sendTrig(31,useport);
-                else
-                    sendTrig(32,useport);
-                end
-                
-                %check if confidence should be randomly sampled
+                                %check if confidence should be randomly sampled
                 for n = 1:length(cjsamples)
                     if numOfFlips == cjsamples(n)
                         drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window);
@@ -132,6 +113,31 @@ while (flipEndFlag == 0)
                     end
                 end
                 
+                                % Get the next tile that will be flipped.
+                % This while loop forces that we keep randomly picking a
+                % tile until we get one that has not been flipped already.
+                nextToFlip = ceil(rand*25);
+                while (tilesCoord(nextToFlip,3) == 1)&& numOfFlips < 25
+                    nextToFlip = ceil(rand*25);
+                end
+                tilesCoord(nextToFlip,3) = 1;
+                
+                % If this variable exists, it means we can set the point
+                % where participants are forced to respond on Forced
+                % trials.
+                if (exist('forcedPLevel','var') == 1)
+                    if (forcedPLevel < trials(t).trialBreakdown(numOfFlips).majPCorrect)
+                        forcedFlag = 1;
+                    end
+                end
+                
+                % Colour the next tile to be flipped black. Flip screen to
+                % show black tile.
+                Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
+                Screen('Flip',Sc.window);
+                
+
+                
                 break;
             end
         end
@@ -139,7 +145,7 @@ while (flipEndFlag == 0)
     
     if(buttons(1) && (numOfFlips == 24))
         %add trigger for flip
-        sendTrig(25,useport);
+%         sendTrig(25,useport);
         while 1
             % Wait for mouse release.
             [x,y,buttons] = GetMouse;
@@ -174,12 +180,13 @@ while (flipEndFlag == 0)
                 vars = drawGrid(Sc.window,vars,trials,t,0);
                 trialBreakdown;
                 Screen('Flip',Sc.window);
-                %add trigger for reveal
-                if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
-                    sendTrig(31,useport);
-                else
-                    sendTrig(32,useport);
-                end
+                %add trigger for colour reveal
+                %31 is majority colour, 32 is minority colour
+%                 if strcmp(trials(t).trialBreakdown(numOfFlips).colourRevealed,trials(t).trueColour)
+%                     sendTrig(31,useport);
+%                 else
+%                     sendTrig(32,useport);
+%                 end
                 
                 break
             end
@@ -207,7 +214,7 @@ while (flipEndFlag == 0)
     if((keyIsDown)&&numOfFlips>0&&~strcmp(trials(t).type,'forced'))
         while 1
             %insert trigger for answer
-            sendTrig(99,useport);
+%             sendTrig(99,useport);
             % Wait for key release.
             [ keyIsDown, keyTime, keyCode ] = KbCheck;
             if(~(keyIsDown))
@@ -254,6 +261,8 @@ while (answerFlag == 0)
             % Wait for mouse release.
             [x,y,buttons] = GetMouse;
             if(~(buttons(1)))
+                %highlight left option
+                %Screen('Flip',Sc.window);
                 trials(t).finalAnswerTime = GetSecs;
                 trials(t).finalAns = 1;
                 trials(t).finalColour = vars.colourNames(1);
@@ -269,6 +278,7 @@ while (answerFlag == 0)
                         points = points + decPoints;
                         trials(t).reward = decPoints;
                     end
+                    %Present feedback and current points
                     % Wrong answer!
                 else
                     trials(t).correct = 0;
@@ -276,6 +286,7 @@ while (answerFlag == 0)
                     % Deduct points.
                     points = points - vars.wrongPointsLoss;
                     trials(t).reward = vars.wrongPointsLoss*-1;
+                    %Present feedback and current points
                 end
                 % Break out of loop of waiting for an answer.
                 answerFlag = 1;
