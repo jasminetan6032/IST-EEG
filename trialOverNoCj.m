@@ -19,6 +19,7 @@ if (trials(t).correct == 0)
     Beeper(1000,.4,.5);
 end
 
-%Screen('DrawText',Sc.window, trialText,vars.centerX,trialy,[0 0 0]);
+feedback = [trialText newline newline 'You currently have ' num2str(points) ' points'];
+DrawFormattedText(Sc.window, feedback,'center', trialy, [1 1 1]);
 Screen('Flip',Sc.window);
 WaitSecs(1);

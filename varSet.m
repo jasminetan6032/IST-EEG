@@ -43,7 +43,7 @@ function [vars] = varSet(vars)
     % Below fields only applicable for time length generation.
     % How long do you want the experiment to be (in minutes) for each trial type?
     %Total length of experiment
-    vars.numOfExpMinutes = 5;
+    vars.numOfExpMinutes = 3;
     
     
     % Set points for the fixed and decreasing win conditions.
