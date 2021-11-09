@@ -23,9 +23,12 @@ end
 
 if trials(t).correct == 1
     feedback = [trialText newline newline 'You have earned ' num2str(trials(t).reward) ' points'];
+    feedback_trigger = 40;
 else
     feedback = [trialText newline newline 'You have lost ' num2str(vars.wrongPointsLoss) ' points'];
+    feedback_trigger = 41;
 end
 DrawFormattedText(Sc.window, feedback,'center', trialy, [1 1 1]);
 Screen('Flip',Sc.window);
+% sendTrig(feedback_trigger,useport);
 WaitSecs(1);

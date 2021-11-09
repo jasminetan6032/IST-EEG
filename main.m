@@ -26,14 +26,14 @@ tic
 [vars] = varSet(vars);
 
 % You can resume an experiment at where it left off in case of a crash.
-% if (subject.restart)
-%     [filename, pathname] = uigetfile('*.mat', 'Pick last saved file ');
-%     load([pathname filename]);
-%     starttrial = t;
-%     vars.restarted = 1;
-% else
-%     starttrial=1;
-% end
+if (subject.restart)
+    [filename, pathname] = uigetfile('*.mat', 'Pick last saved file ');
+    load([pathname filename]);
+    starttrial = t;
+    vars.restarted = 1;
+else
+    starttrial=1;
+end
 
 % Below script sets the initial value for variables we need for the
 % experiment.
