@@ -127,7 +127,7 @@ while (flipEndFlag == 0)
                     end
                 end
                 
-                %if numOfFlips < 25 %because already incremented
+                %if numOfFlips < 25 %already incremented
                 % Get the next tile that will be flipped.
                 % This while loop forces that we keep randomly picking a
                 % tile until we get one that has not been flipped already.
