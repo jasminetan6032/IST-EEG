@@ -1,5 +1,6 @@
 save([pwd '/' vars.rawdata_path num2str(subject.id) '/behaviour/' subject.fileName '_' num2str(round(t/vars.expBlockLength))],'trials', 'vars', 'subject', 't');
 correct = [trials(1:t).correct];
+
 text = ['You currently have ' num2str(points) ' points' newline newline 'Your accuracy up until this point is ' num2str((sum(correct)/t)*100) '%'];
 text = [text newline newline newline 'You may now take a break. Click on the screen to continue.'];
 DrawFormattedText(Sc.window, text,'center', 'center', [0 0 0]);
@@ -24,9 +25,7 @@ while ~hasconfirmed
 end
 
 if (strcmp(subject.blockCondition, 'fixed'))
-    subject.blockCondition = vars.expStructure{2};
+    subject.blockCondition =vars.expStructure{2};
 elseif (strcmp(subject.blockCondition, 'decreasing'))
-    subject.blockCondition = vars.expStructure{1};
+    subject.blockCondition =vars.expStructure{1};
 end
-
-vars.trialmatrix = randperm(vars.expBlockLength);

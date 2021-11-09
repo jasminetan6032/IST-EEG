@@ -55,7 +55,7 @@ while (flipEndFlag == 0)
             [x,y,buttons] = GetMouse;
             if(~(buttons(1)))
                 %Wait 1 second
-                WaitSecs(1)
+                WaitSecs(0.5)
                 % Record time when flip occured.
                 flipTimestamps = [flipTimestamps GetSecs];
                 % Increment number of flips for this trial.

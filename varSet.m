@@ -5,8 +5,8 @@ function [vars] = varSet(vars)
     % SET EXPERIMENTAL VARIABLES IN THE BELOW BLOCK
     
     % Set X and Y dimensions of the experiment window below.
-    vars.resX = 1400;
-    vars.resY = 900;
+    vars.resX = 1920;
+    vars.resY = 1200;
     
     vars.gridX = 400;
     vars.gridY = 400;
@@ -24,7 +24,7 @@ function [vars] = varSet(vars)
     % How many blocks?
     vars.numOfExpBlocks = 2;
     % How many trials per block (before going to a break)? 
-    vars.expBlockLength = 3;
+    vars.expBlockLength = 5;
 
     
     % Trial Types are fixed, decreasing and forced (in this recommended order).
@@ -64,6 +64,13 @@ function [vars] = varSet(vars)
     vars.colourCode2 = [0.6350 0.0780 0.1840];
     vars.colourCodeN = [0,0,0];
     vars.colourNames = {'orange','red','black'};
+    
+    %Set variable difficulty levels. Correct answer is always in Column 1
+    
+   vars.difficultyLevels(1:5,1:2) = zeros(5,2);
+   vars.difficultyLevels(1:5,1) = 13:17;
+   vars.difficultyLevels(1:5,2) = [12,11,10,9,8];
+   vars.trialmatrix = randperm(vars.expBlockLength);
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
