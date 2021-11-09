@@ -65,12 +65,13 @@ function [vars] = varSet(vars)
     vars.colourCodeN = [0,0,0];
     vars.colourNames = {'orange','red','black'};
     
-    %Set variable difficulty levels. Correct answer is always in Column 1
-    
-   vars.difficultyLevels(1:5,1:2) = zeros(5,2);
+    %Set variable difficulty levels. Larger number is always in Column 1
+    %Currently it's only set for a 5-by-5 grid with 5 difficulty levels.
+    vars.difficultyLevels = zeros(5,2);
    vars.difficultyLevels(1:5,1) = 13:17;
    vars.difficultyLevels(1:5,2) = [12,11,10,9,8];
    vars.trialmatrix = randperm(vars.expBlockLength);
+   vars.withinBlockNumber = 1;
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end

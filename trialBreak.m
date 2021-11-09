@@ -30,3 +30,4 @@ elseif (strcmp(subject.blockCondition, 'decreasing'))
 end
 
 vars.trialmatrix = randperm(vars.expBlockLength);
+vars.withinBlockNumber = 1;

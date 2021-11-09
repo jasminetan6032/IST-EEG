@@ -8,6 +8,8 @@ subject.totalFlips = subject.totalFlips + numOfFlips;
 subject.totalTime = subject.totalTime + trials(t).trialTime;
 subject.numOfTrials = subject.numOfTrials + 1;
 
+vars.withinBlockNumber = vars.withinBlockNumber + 1;
+
 drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
 vars = drawGrid(Sc.window,vars,trials,t,1);
 [trials(t).finalCj, trials(t).finalCjTime, ...
