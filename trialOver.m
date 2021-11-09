@@ -20,7 +20,7 @@ if (trials(t).correct == 0)
 end
 
 if trials(t).correct == 1
-    feedback = [trialText newline newline 'You have earned ' num2str(reward) ' points'];
+    feedback = [trialText newline newline 'You have earned ' num2str(trials(t).reward) ' points'];
 else
     feedback = [trialText newline newline 'You have lost ' num2str(vars.wrongPointsLoss) ' points'];
 end
