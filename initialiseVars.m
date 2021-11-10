@@ -56,6 +56,13 @@ optionCoords(2,2) = winAreaY*0.875;
 optionCoords(3,2) = winAreaX*0.65;
 optionCoords(4,2) = winAreaY*0.975;
 vars.optionCoords = optionCoords;
+spacebarCoords = [];
+spacebarCoords(1,1) = winAreaX*0.25;
+spacebarCoords(2,1) = winAreaY*0.875;
+spacebarCoords(3,1) = winAreaX*0.45;
+spacebarCoords(4,1) = winAreaY*0.975;
+vars.spacebarCoords = spacebarCoords;
+
 
 % x and y coordinates of where to put feedback text on the screen.
 trialx = answerCoords(1) + ((answerCoords(3) - answerCoords(1))/2);

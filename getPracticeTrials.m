@@ -3,7 +3,7 @@
 function [trials] = getPracticeTrials(vars)
 
     % Total number of trials across the experiment.
-    numOfExpTrials = vars.numOfExpBlocks*vars.exptrainingLength;
+    numOfExpTrials = vars.numOfExpBlocks*vars.trainingLength;
     b = numOfExpTrials;
         
     blockToAssign = 1;
@@ -31,7 +31,7 @@ function [trials] = getPracticeTrials(vars)
         % Load up trial numbers.
         trials(n).trialNumber = n;
         trials(n).break = 0;
-        trialTot = vars.expBlockLength;
+        trialTot = vars.trainingLength;
         trials(n).block = blockToAssign;
         typesBlocks = vars.expBlocks;
         typeOrder = vars.expStructure;

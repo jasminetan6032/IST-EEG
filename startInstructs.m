@@ -17,7 +17,7 @@ end
 % click to move back.
 r = 1;
 while r<= numOfInstructs
-    insimdata = imread(strcat('Instructions/',filePrefix,num2str(r),'.jpeg'));
+    insimdata = imread(strcat('Instructions/',filePrefix,num2str(r),'.jpg'));
     texins = Screen('MakeTexture', Sc.window, insimdata);
     Screen('DrawTexture', Sc.window, texins,[],Sc.rect);
     Screen('Flip',Sc.window);
@@ -46,7 +46,7 @@ end
 
 %Practice trials
 if (vars.practice)
-    [practicetrials] = getTrials(vars);
+    [practicetrials] = getPracticeTrials(vars);
     
     %Give participant first instruction:'Fixed' mode
     displayInstructions ('fixed_practice', Sc);

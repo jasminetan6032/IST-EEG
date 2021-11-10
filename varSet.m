@@ -38,7 +38,7 @@ function [vars] = varSet(vars)
     vars.expStructure = {'fixed','decreasing'}; 
     % Just put zero below if you don't want any of a particular type.
     % Make sure expBlocks values add up to numOfExpBlocks above.
-%     vars.expBlocks = [1,1,0];
+    vars.expBlocks = [1,1];
     
     % Below field only applicable for flips length generation.
     % How many flips do you want in the experiment for each trial type?

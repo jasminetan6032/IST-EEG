@@ -5,7 +5,7 @@
 %that is a character eg. subject.blockCondition
 
 function displayInstructions(instructions, Sc)
-insimdata = imread(strcat('Instructions/',instructions,'.jpeg'));
+insimdata = imread(strcat('Instructions/',instructions,'.jpg'));
 texins = Screen('MakeTexture', Sc.window, insimdata);
 Screen('DrawTexture', Sc.window, texins,[],Sc.rect);
 Screen('Flip',Sc.window);
