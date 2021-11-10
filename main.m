@@ -125,5 +125,7 @@ else
     end
 end
 
+save([pwd '/' vars.rawdata_path num2str(subject.id) '/behaviour/' subject.fileName '_' num2str(round(t/vars.expBlockLength))],'trials', 'vars', 'subject', 't');
+
 % End the experiment
 subject = endExp(subject,trials,Sc);

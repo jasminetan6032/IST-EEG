@@ -10,7 +10,7 @@ if (strcmp(vars.experimentType,'behavioural'))
     numOfInstructs = 5;
 elseif (strcmp(vars.experimentType,'eeg'))
     filePrefix = "eeg";
-    numOfInstructs = 7;
+    numOfInstructs = 9;
 end
 
 % Loop through instruction files, with right click to move forward and left
