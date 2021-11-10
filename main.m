@@ -58,8 +58,11 @@ else
 end
 
 if (vars.doInstr)
-    startInstructs;
+    startInstructs; %also includes practice trials
 end
+
+%Turn off practice function
+vars.practice = false;
 
 % We need to see which experiment we are doing: behavioural or eeg.
 % Behavioural: allow participants to choose while tile to reveal and click
@@ -125,7 +128,5 @@ else
     end
 end
 
-save([pwd '/' vars.rawdata_path num2str(subject.id) '/behaviour/' subject.fileName '_' num2str(round(t/vars.expBlockLength))],'trials', 'vars', 'subject', 't');
-
 % End the experiment
-subject = endExp(subject,trials,Sc);
+subject = endExp(subject,trials,vars,Sc);

@@ -15,7 +15,10 @@ function [vars] = varSet(vars)
     vars.experimentType = 'eeg';
     
     % Setting to skip instructions while debugging
-    vars.doInstr = false;   
+    vars.doInstr = true;   
+    
+    % Setting for practice trials
+    vars.practice = true;
     
     % Do we define the length of the experiment by trials, flips or time?
     vars.expLengthMeasure  = 'time';
@@ -23,6 +26,7 @@ function [vars] = varSet(vars)
     % Below field only applicable for trials length generation.
     % How many blocks?
     vars.numOfExpBlocks = 2;
+    vars.trainingLength = 1;
     % How many trials per block (before going to a break)? 
     vars.expBlockLength = 5;
 
@@ -35,7 +39,6 @@ function [vars] = varSet(vars)
     % Just put zero below if you don't want any of a particular type.
     % Make sure expBlocks values add up to numOfExpBlocks above.
 %     vars.expBlocks = [1,1,0];
-    vars.trainingLength = 5;
     
     % Below field only applicable for flips length generation.
     % How many flips do you want in the experiment for each trial type?
