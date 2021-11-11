@@ -39,6 +39,13 @@ end
 % experiment.
 initialiseVars;
 
+if (vars.doInstr)
+    startInstructs; %also includes practice trials
+end
+
+%Turn off practice function
+vars.practice = false;
+
 if (strcmp(vars.expLengthMeasure,'trials'))
     % Generate the struct of trials and cues to be given on each trial.
     [trials] = getTrials(vars);
@@ -57,12 +64,6 @@ else
         cell(1,1),'tileClicked',cell(1,1)));
 end
 
-if (vars.doInstr)
-    startInstructs; %also includes practice trials
-end
-
-%Turn off practice function
-vars.practice = false;
 
 % We need to see which experiment we are doing: behavioural or eeg.
 % Behavioural: allow participants to choose while tile to reveal and click
@@ -86,11 +87,11 @@ if (strcmp(vars.expLengthMeasure,"trials"))
     elseif (strcmp(vars.experimentType,'eeg'))
         for t = 1 : length(trials)
             % trigger for start of stimuli
-%             if (strcmp(trials.type, 'fixed'))
-%                 sendTrig(100,useport)  
-%             elseif (strcmp(trials.type, 'descending'))
-%                 sendTrig(200,useport)
-%             end
+            %             if (strcmp(trials.type, 'fixed'))
+            %                 sendTrig(100,useport)
+            %             elseif (strcmp(trials.type, 'descending'))
+            %                 sendTrig(200,useport)
+            %             end
             
             eegLoop;
         end
@@ -116,12 +117,17 @@ else
             else
                 t = subject.numOfTrials;
                 % trigger for start of stimuli
-%             if (strcmp(trials(t).type, 'fixed'))
-%                 sendTrig(100,useport)  
-%             elseif (strcmp(trials(t).type, 'decreasing'))
-%                 sendTrig(200,useport)
-%             end
-                
+                % starts with 100 is fixed, 200 is decreasing
+                % difficulty levels noted: 113 is hardest, 117 is easiest
+                if (vars.triggers)
+                    difficulty = vars.difficultyLevels(vars.trialmatrix(vars.withinBlockNumber),1)
+                    if (strcmp(trials(t).type, 'fixed'))
+                        trialtrigger = 100 + difficulty;
+                    elseif (strcmp(trials(t).type, 'decreasing'))
+                        trialtrigger = 200 + difficulty;
+                    end
+                    sendTrig(trialtrigger,useport)
+                end
                 eegLoop;
             end
         end

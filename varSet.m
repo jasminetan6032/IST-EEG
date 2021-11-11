@@ -11,8 +11,9 @@ function [vars] = varSet(vars)
     vars.gridX = 400;
     vars.gridY = 400;
     
-    % Set below to 'behavioural' or 'eeg'
+    % Set below to 'behavioural' or 'eeg' and set to send triggers or not
     vars.experimentType = 'eeg';
+    vars.triggers = false;
     
     % Setting to skip instructions while debugging
     vars.doInstr = true;   
@@ -23,7 +24,7 @@ function [vars] = varSet(vars)
     % Do we define the length of the experiment by trials, flips or time?
     vars.expLengthMeasure  = 'time';
     
-    % Below field only applicable for trials length generation.
+    % Below field only applicable for trials length generation (right now, for practice trials).
     % How many blocks?
     vars.numOfExpBlocks = 2;
     vars.trainingLength = 1;

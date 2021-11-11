@@ -15,14 +15,18 @@ function [vars] = varSet(vars)
     vars.experimentType = 'eeg';
     
     % Setting to skip instructions while debugging
-    vars.doInstr = false;   
+    vars.doInstr = true;   
+    
+    % Setting for practice trials
+    vars.practice = true;
     
     % Do we define the length of the experiment by trials, flips or time?
     vars.expLengthMeasure  = 'time';
     
-    % Below field only applicable for trials length generation.
+    % Below field only applicable for trials length generation (right now, for practice trials).
     % How many blocks?
     vars.numOfExpBlocks = 2;
+    vars.trainingLength = 1;
     % How many trials per block (before going to a break)? 
     vars.expBlockLength = 5;
 
@@ -34,8 +38,7 @@ function [vars] = varSet(vars)
     vars.expStructure = {'fixed','decreasing'}; 
     % Just put zero below if you don't want any of a particular type.
     % Make sure expBlocks values add up to numOfExpBlocks above.
-%     vars.expBlocks = [1,1,0];
-    vars.trainingLength = 5;
+    vars.expBlocks = [1,1];
     
     % Below field only applicable for flips length generation.
     % How many flips do you want in the experiment for each trial type?
@@ -43,7 +46,7 @@ function [vars] = varSet(vars)
     % Below fields only applicable for time length generation.
     % How long do you want the experiment to be (in minutes) for each trial type?
     %Total length of experiment
-    vars.numOfExpMinutes = 3;
+    vars.numOfExpMinutes = 4;
     
     
     % Set points for the fixed and decreasing win conditions.
@@ -68,10 +71,10 @@ function [vars] = varSet(vars)
     %Set variable difficulty levels. Larger number is always in Column 1
     %Currently it's only set for a 5-by-5 grid with 5 difficulty levels.
     vars.difficultyLevels = zeros(5,2);
-   vars.difficultyLevels(1:5,1) = 13:17;
-   vars.difficultyLevels(1:5,2) = [12,11,10,9,8];
-   vars.trialmatrix = randperm(vars.expBlockLength);
-   vars.withinBlockNumber = 1;
+    vars.difficultyLevels(1:5,1) = 13:17;
+    vars.difficultyLevels(1:5,2) = [12,11,10,9,8];
+    vars.trialmatrix = randperm(vars.expBlockLength);
+    vars.withinBlockNumber = 1;
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end

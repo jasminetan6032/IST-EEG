@@ -4,9 +4,9 @@
 function newConditionInstructs(t,trials,vars,Sc)
 if (t > 1 && ~strcmp(trials(t).type,trials(t-1).type) && vars.doInstr)
     if (vars.practice)
-        insimdata = imread(char(strcat('Instructions/',trials(t).type,'_practice.jpeg')));
+        insimdata = imread(char(strcat('Instructions/',trials(t).type,'_practice.jpg')));
     else
-        insimdata = imread(char(strcat('Instructions/',trials(t).type,'.jpeg')));
+        insimdata = imread(char(strcat('Instructions/',trials(t).type,'.jpg')));
     end
     texins = Screen('MakeTexture', Sc.window, insimdata);
     Screen('DrawTexture', Sc.window, texins,[],Sc.rect);

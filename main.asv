@@ -26,18 +26,25 @@ tic
 [vars] = varSet(vars);
 
 % You can resume an experiment at where it left off in case of a crash.
-% if (subject.restart)
-%     [filename, pathname] = uigetfile('*.mat', 'Pick last saved file ');
-%     load([pathname filename]);
-%     starttrial = t;
-%     vars.restarted = 1;
-% else
-%     starttrial=1;
-% end
+if (subject.restart)
+    [filename, pathname] = uigetfile('*.mat', 'Pick last saved file ');
+    load([pathname filename]);
+    starttrial = t;
+    vars.restarted = 1;
+else
+    starttrial=1;
+end
 
 % Below script sets the initial value for variables we need for the
 % experiment.
 initialiseVars;
+
+if (vars.doInstr)
+    startInstructs; %also includes practice trials
+end
+
+%Turn off practice function
+vars.practice = false;
 
 if (strcmp(vars.expLengthMeasure,'trials'))
     % Generate the struct of trials and cues to be given on each trial.
@@ -57,9 +64,6 @@ else
         cell(1,1),'tileClicked',cell(1,1)));
 end
 
-if (vars.doInstr)
-    startInstructs;
-end
 
 % We need to see which experiment we are doing: behavioural or eeg.
 % Behavioural: allow participants to choose while tile to reveal and click
@@ -83,11 +87,11 @@ if (strcmp(vars.expLengthMeasure,"trials"))
     elseif (strcmp(vars.experimentType,'eeg'))
         for t = 1 : length(trials)
             % trigger for start of stimuli
-%             if (strcmp(trials.type, 'fixed'))
-%                 sendTrig(100,useport)  
-%             elseif (strcmp(trials.type, 'descending'))
-%                 sendTrig(200,useport)
-%             end
+            %             if (strcmp(trials.type, 'fixed'))
+            %                 sendTrig(100,useport)
+            %             elseif (strcmp(trials.type, 'descending'))
+            %                 sendTrig(200,useport)
+            %             end
             
             eegLoop;
         end
@@ -95,9 +99,6 @@ if (strcmp(vars.expLengthMeasure,"trials"))
     % Build trials on the fly.
 else
     endFlag = 0;
-    
-    %This adds the ability to permute 5 difficulty levels in conjunction
-    %with a block length of 5 trials. 
     if (strcmp(vars.experimentType,'behavioural'))
         while 1
             [trials, endFlag, subject] = dynamicTrials(vars,trials,subject);
@@ -116,12 +117,17 @@ else
             else
                 t = subject.numOfTrials;
                 % trigger for start of stimuli
-%             if (strcmp(trials(t).type, 'fixed'))
-%                 sendTrig(100,useport)  
-%             elseif (strcmp(trials(t).type, 'decreasing'))
-%                 sendTrig(200,useport)
-%             end
-                
+                % starts with 100 is fixed, 200 is decreasing
+                % difficulty levels noted: 113 is hardest, 117 is easiest
+                if (vars.triggers)
+                    difficulty = vars.difficultyLevels(vars.trialmatrix(vars.withinBlockNumber),1)
+                    if (strcmp(trials(t).type, 'fixed'))
+                        trialtrigger = 100 + difficulty;
+                    elseif (strcmp(trials(t).type, 'decreasing'))
+                        trialtrigger = 200 + difficulty;
+                    end
+                    sendTrig(trialtrigger,useport)
+                end
                 eegLoop;
             end
         end
@@ -129,4 +135,4 @@ else
 end
 
 % End the experiment
-subject = endExp(subject,trials,Sc);
+subject = endExp(subject,trials,vars,Sc);

@@ -46,15 +46,20 @@ end
 
 %Practice trials
 if (vars.practice)
-    [practicetrials] = getPracticeTrials(vars);
+    [trials] = getPracticeTrials(vars);
     
     %Give participant first instruction:'Fixed' mode
     displayInstructions ('fixed_practice', Sc);
     
-    for t = 1 : length(practicetrials)
+    for t = 1 : length(trials)
         eegLoop;
     end
 end
+
+%empty trials, re-initialise subject.numOfTrials, restart points
+trials = []; 
+subject.numOfTrials = 1;
+points = 0;
 
 %display start of experiment
 displayInstructions ('exp', Sc);
