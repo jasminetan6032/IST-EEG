@@ -18,7 +18,7 @@ if (vars.triggers)
 end
 [trials(t).finalCj, trials(t).finalCjTime, ...
     trials(t).cjLoc,trials(t).cjDidRespond] = ...
-    cjSlider(Sc,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,1);
+    cjSlider_eeg(Sc,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,1,useport);
 
 
 if trials(t).correct == 1

@@ -120,7 +120,7 @@ else
                 % starts with 100 is fixed, 200 is decreasing
                 % difficulty levels noted: 113 is hardest, 117 is easiest
                 if (vars.triggers)
-                    difficulty = vars.difficultyLevels(vars.trialmatrix(vars.withinBlockNumber),1)
+                    difficulty = vars.difficultyLevels(vars.trialmatrix(vars.withinBlockNumber),1);
                     if (strcmp(trials(t).type, 'fixed'))
                         trialtrigger = 100 + difficulty;
                     elseif (strcmp(trials(t).type, 'decreasing'))

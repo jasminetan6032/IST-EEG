@@ -13,7 +13,7 @@ function [vars] = varSet(vars)
     
     % Set below to 'behavioural' or 'eeg' and set to send triggers or not
     vars.experimentType = 'eeg';
-    vars.triggers = false;
+    vars.triggers = true;
     
     % Setting to skip instructions while debugging
     vars.doInstr = true;   
@@ -47,7 +47,7 @@ function [vars] = varSet(vars)
     % Below fields only applicable for time length generation.
     % How long do you want the experiment to be (in minutes) for each trial type?
     %Total length of experiment
-    vars.numOfExpMinutes = 4;
+    vars.numOfExpMinutes = 45;
     
     
     % Set points for the fixed and decreasing win conditions.

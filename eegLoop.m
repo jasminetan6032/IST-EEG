@@ -86,6 +86,7 @@ while (flipEndFlag == 0)
                 drawColourTiles(fillCoords,numOfFlips,colourArr,Sc.window)
                 % Redraw the grid.
                 vars = drawGrid(Sc.window,vars,trials,t,0);
+                trialBreakdown;
                 %trigger for colour reveal
                 %31 for majority colour, 32 for minority colour
                 Screen('Flip',Sc.window);
@@ -98,7 +99,6 @@ while (flipEndFlag == 0)
                 end
                 WaitSecs(1);
                 
-                trialBreakdown;
                 
                 %check if confidence should be randomly sampled
                 for n = 1:length(cjsamples)
@@ -111,7 +111,7 @@ while (flipEndFlag == 0)
                         end
                         [trials(t).trialBreakdown(numOfFlips).Cjsample, trials(t).trialBreakdown(numOfFlips).CjsampleTime, ...
                             trials(t).trialBreakdown(numOfFlips).cjLoc,trials(t).trialBreakdown(numOfFlips).cjDidRespond] = ...
-                            cjSlider(Sc,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,1);
+                            cjSlider_eeg(Sc,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,1,useport);
                         Screen('Flip',Sc.window);
                         % Draw the new flipped tile and all tiles flipped up to
                         % this point in the trial.
