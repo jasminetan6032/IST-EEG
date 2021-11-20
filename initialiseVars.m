@@ -80,7 +80,7 @@ points = 0;
 cfg.bar.maxScale            = 55;
 cfg.bar.minScale            = -55;
 cfg.backgroundColour = Sc.bkgCol;           % grey
-cfg.fontsize=25;
+cfg.fontsize=18;
 % instructions on screen
 cfg.instr.cjtext        = {'50%' '100%'};           % confidence judgement text
 cfg.instr.instr = {'Right click to confirm'}; % how to respond.
@@ -98,6 +98,6 @@ else
     subject.blockCondition = vars.expStructure{2};
 end
 
-if (strcmp(vars.experimentType,'eeg'))
+if (vars.triggers)
     useport = pairStimtoEEG;
 end

@@ -15,10 +15,15 @@ vars = drawGrid(Sc.window,vars,trials,t,1);
 %add trigger for presentation of cjslider
 if (vars.triggers)
     sendTrig (50,useport)
-end
-[trials(t).finalCj, trials(t).finalCjTime, ...
+    [trials(t).finalCj, trials(t).finalCjTime, ...
     trials(t).cjLoc,trials(t).cjDidRespond] = ...
     cjSlider_eeg(Sc,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,1,useport);
+else 
+    [trials(t).finalCj, trials(t).finalCjTime, ...
+    trials(t).cjLoc,trials(t).cjDidRespond] = ...
+    cjSlider(Sc,vars,cfg,fillCoords,numOfFlips,colourArr,trials,t,1);
+end
+
 
 
 if trials(t).correct == 1
@@ -31,10 +36,10 @@ end
 DrawFormattedText(Sc.window, feedback,'center', trialy, [1 1 1]);
 Screen('Flip',Sc.window);
 
-if (trials(t).correct == 0)
-    % Audio tone for incorrect answers.
-    Beeper(1000,.4,.5);
-end
+% if (trials(t).correct == 0)
+%     % Audio tone for incorrect answers.
+%     Beeper(1000,.4,.5);
+% end
 
 if (vars.triggers)
     sendTrig(feedback_trigger,useport);

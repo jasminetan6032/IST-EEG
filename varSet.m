@@ -5,15 +5,15 @@ function [vars] = varSet(vars)
     % SET EXPERIMENTAL VARIABLES IN THE BELOW BLOCK
     
     % Set X and Y dimensions of the experiment window below.
-    vars.resX = 1920;
-    vars.resY = 1200;
+    vars.resX = 1920; %1400
+    vars.resY = 1200;  %900
     
     vars.gridX = 400;
     vars.gridY = 400;
     
     % Set below to 'behavioural' or 'eeg' and set to send triggers or not
     vars.experimentType = 'eeg';
-    vars.triggers = true;
+    vars.triggers = false;
     
     % Setting to skip instructions while debugging
     vars.doInstr = true;   
@@ -47,7 +47,7 @@ function [vars] = varSet(vars)
     % Below fields only applicable for time length generation.
     % How long do you want the experiment to be (in minutes) for each trial type?
     %Total length of experiment
-    vars.numOfExpMinutes = 45;
+    vars.numOfExpMinutes = 3;
     
     
     % Set points for the fixed and decreasing win conditions.

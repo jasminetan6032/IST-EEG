@@ -27,17 +27,17 @@ while ~hasconfirmed
     while any(buttons)||~haschanged   % wait for release and change of cj and confirmation
         [resp_x, resp_y, buttons] = GetMouse();
         if resp_x<vars.centerX % if mouse's on the left rect
-            if (vars.triggers)
-                sendTrig(51,useport)
-            end
+%             if (vars.triggers)
+%                 sendTrig(51,useport)
+%             end
             resp = find(resp_x < (cfg.bar.xshift+cfg.bar.cursorwidth.*.5),1) - cfg.bar.maxScale-1;
             haschanged = true;
             int = -1;
             if resp==0, resp=int;end
         elseif resp_x>vars.centerX %&& resp_x<=cfg.bar.barrect(3) % if mouse's on the right rect
-            if (vars.triggers)
-                sendTrig(51,useport)
-            end
+%             if (vars.triggers)
+%                 sendTrig(51,useport)
+%             end
             resp = find(resp_x < (cfg.bar.xshift+cfg.bar.cursorwidth.*.5),1) - cfg.bar.maxScale;
             haschanged = true;
             int = 1;
