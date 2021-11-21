@@ -39,6 +39,9 @@ vars = drawGrid(Sc.window,vars,trials,t,0);
 squareCoords = vars.squareCoords;
 Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
 Screen('Flip',Sc.window);
+if (vars.triggers)
+    sendTrig(33,useport);
+end
 % Time of start of trial.
 trials(t).trialStart = GetSecs;
 
