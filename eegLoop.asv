@@ -3,13 +3,11 @@
 
 newConditionInstructs(t,trials,vars,Sc)
 
-if((vars.practice) && t == 2)
-    vars.colourCode1 = [0.1176    0.5647    1.0000];
+if(vars.practice)
+    vars.colourCode1 = [0 1 1];
     vars.colourCode2 = [0 1 0.4980];
     vars.colourCodeN = [0,0,0];
     vars.colourNames = {'blue','green','black'};
-    colours = [vars.colourCode1; vars.colourCode2];
-vars.colours = colours;
 end
 
 SetMouse(centerX, centerY);

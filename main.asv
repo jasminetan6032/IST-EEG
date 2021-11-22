@@ -57,7 +57,7 @@ if mod(subject.id,2) == 0
     vars.colours = colours;
 else
     subject.blockCondition = vars.expStructure{2};
-    vars.colourCode1 = [0.1176    0.5647    1.0000];
+    vars.colourCode1 = [0 1 1];
     vars.colourCode2 = [0 1 0.4980];
     vars.colourCodeN = [0,0,0];
     vars.colourNames = {'blue','green','black'};
