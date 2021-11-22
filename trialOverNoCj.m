@@ -27,10 +27,10 @@ end
 DrawFormattedText(Sc.window, feedback,'center', trialy, [1 1 1]);
 Screen('Flip',Sc.window);
 
-if (trials(t).correct == 0)
-    % Audio tone for incorrect answers.
-    Beeper(1000,.4,.5);
-end
+% if (trials(t).correct == 0)
+%     % Audio tone for incorrect answers.
+%     Beeper(1000,.4,.5);
+% end
 
 if (vars.triggers)
     sendTrig(feedback_trigger,useport);
