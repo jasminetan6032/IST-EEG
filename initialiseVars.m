@@ -20,7 +20,7 @@ tiles = gridX*gridY;
 
 % Generate a grid of coordinates for referring to tiles
 % eg 5 X 5 grid: coordinates of (1,1) to (5,5)
-tilesCoord = [];
+tilesCoord = []; 
 count = 1;
 for x=1:gridX
     for y=1:gridY
@@ -31,7 +31,7 @@ for x=1:gridX
 end
 
 % Answer box used by participants in the behavioural experiment to indicate
-% when they want to stop flipping tiles and give their answer.
+% when they want to stop flipping tiles and give their answer. 
 % The box should sit below the main IST grid in the centre, so below put it
 % in a resonable position and adapt based on the window size.
 % Below we set the size and coordinates of this box.
@@ -84,7 +84,7 @@ cfg.fontsize=18;
 % instructions on screen
 cfg.instr.cjtext        = {'50%' '100%'};           % confidence judgement text
 cfg.instr.instr = {'Right click to confirm'}; % how to respond.
-cfg.instr.finaldecision = {'What is your final decision?'};
+cfg.instr.finaldecision = {'What is your final decision?'};                 
 cfg.instr.interval      = {'LEFT' 'RIGHT'};
 
 % Defining subject measures for dynamic experiment length and
@@ -92,7 +92,6 @@ cfg.instr.interval      = {'LEFT' 'RIGHT'};
 subject.totalFlips = 0;
 subject.totalTime = 0;
 subject.numOfTrials = 1;
-
 if mod(subject.id,2) == 0
     subject.blockCondition = vars.expStructure{1};
 else

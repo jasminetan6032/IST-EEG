@@ -3,15 +3,6 @@
 
 newConditionInstructs(t,trials,vars,Sc)
 
-if((vars.practice) && t == 2)
-    vars.colourCode1 = [0.1176    0.5647    1.0000];
-    vars.colourCode2 = [0 1 0.4980];
-    vars.colourCodeN = [0,0,0];
-    vars.colourNames = {'blue','green','black'};
-    colours = [vars.colourCode1; vars.colourCode2];
-vars.colours = colours;
-end
-
 SetMouse(centerX, centerY);
 HideCursor();
 flipTimestamps = [];
@@ -48,9 +39,6 @@ vars = drawGrid(Sc.window,vars,trials,t,0);
 squareCoords = vars.squareCoords;
 Screen('FillRect',Sc.window,vars.colourCodeN,squareCoords(:,nextToFlip)');
 Screen('Flip',Sc.window);
-if (vars.triggers)
-    sendTrig(33,useport);
-end
 % Time of start of trial.
 trials(t).trialStart = GetSecs;
 

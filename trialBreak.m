@@ -15,7 +15,7 @@ while ~hasconfirmed
         Y = y;
         while 1
             % Wait for mouse release.
-            [x,y,buttons] = GetMouse;
+            [x,y,buttons] = GetMouse; 
             if(~(buttons(1))&&~(buttons(2))&&~(buttons(3)))
                 hasconfirmed = true;
                 break;
@@ -26,20 +26,8 @@ end
 
 if (strcmp(subject.blockCondition, 'fixed'))
     subject.blockCondition = vars.expStructure{2};
-    vars.colourCode1 = [0.1176    0.5647    1.0000];
-    vars.colourCode2 = [0 1 0.4980];
-    vars.colourCodeN = [0,0,0];
-    vars.colourNames = {'blue','green','black'};
-    colours = [vars.colourCode1; vars.colourCode2];
-    vars.colours = colours;
 elseif (strcmp(subject.blockCondition, 'decreasing'))
     subject.blockCondition = vars.expStructure{1};
-    vars.colourCode1 = [0.9290 0.6940 0.1250];
-    vars.colourCode2 = [0.6350 0.0780 0.1840];
-    vars.colourCodeN = [0,0,0];
-    vars.colourNames = {'orange','red','black'};
-    colours = [vars.colourCode1; vars.colourCode2];
-    vars.colours = colours;
 end
 
 vars.trialmatrix = randperm(vars.expBlockLength);

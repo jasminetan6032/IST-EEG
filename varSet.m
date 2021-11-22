@@ -5,8 +5,8 @@ function [vars] = varSet(vars)
     % SET EXPERIMENTAL VARIABLES IN THE BELOW BLOCK
     
     % Set X and Y dimensions of the experiment window below.
-    vars.resX = 1400; %1400
-    vars.resY = 900;  %900
+    vars.resX = 1920; %1400
+    vars.resY = 1200;  %900
     
     vars.gridX = 400;
     vars.gridY = 400;
