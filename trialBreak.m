@@ -5,6 +5,9 @@ text = ['You currently have ' num2str(points) ' points' newline newline 'Your ac
 text = [text newline newline newline 'You may now take a break. Click on the screen to continue.'];
 DrawFormattedText(Sc.window, text,'center', 'center', [0 0 0]);
 Screen('Flip', Sc.window);
+        if (vars.triggers)
+            sendTrig(66,useport);
+        end
 WaitSecs(1);
 hasconfirmed = false;
 while ~hasconfirmed
