@@ -20,7 +20,7 @@ tiles = gridX*gridY;
 
 % Generate a grid of coordinates for referring to tiles
 % eg 5 X 5 grid: coordinates of (1,1) to (5,5)
-tilesCoord = []; 
+tilesCoord = [];
 count = 1;
 for x=1:gridX
     for y=1:gridY
@@ -31,7 +31,7 @@ for x=1:gridX
 end
 
 % Answer box used by participants in the behavioural experiment to indicate
-% when they want to stop flipping tiles and give their answer. 
+% when they want to stop flipping tiles and give their answer.
 % The box should sit below the main IST grid in the centre, so below put it
 % in a resonable position and adapt based on the window size.
 % Below we set the size and coordinates of this box.
@@ -56,6 +56,13 @@ optionCoords(2,2) = winAreaY*0.875;
 optionCoords(3,2) = winAreaX*0.65;
 optionCoords(4,2) = winAreaY*0.975;
 vars.optionCoords = optionCoords;
+spacebarCoords = [];
+spacebarCoords(1,1) = winAreaX*0.25;
+spacebarCoords(2,1) = winAreaY*0.875;
+spacebarCoords(3,1) = winAreaX*0.45;
+spacebarCoords(4,1) = winAreaY*0.975;
+vars.spacebarCoords = spacebarCoords;
+
 
 % x and y coordinates of where to put feedback text on the screen.
 trialx = answerCoords(1) + ((answerCoords(3) - answerCoords(1))/2);
@@ -73,11 +80,12 @@ points = 0;
 cfg.bar.maxScale            = 55;
 cfg.bar.minScale            = -55;
 cfg.backgroundColour = Sc.bkgCol;           % grey
-cfg.fontsize=25;
+cfg.fontsize= 18;
+% cfg.numberfontsize = 18;
 % instructions on screen
 cfg.instr.cjtext        = {'50%' '100%'};           % confidence judgement text
 cfg.instr.instr = {'Right click to confirm'}; % how to respond.
-cfg.instr.finaldecision = {'What is your final decision?'};                 
+cfg.instr.finaldecision = {'What is your final decision?'};
 cfg.instr.interval      = {'LEFT' 'RIGHT'};
 
 % Defining subject measures for dynamic experiment length and
@@ -85,12 +93,13 @@ cfg.instr.interval      = {'LEFT' 'RIGHT'};
 subject.totalFlips = 0;
 subject.totalTime = 0;
 subject.numOfTrials = 1;
+
 if mod(subject.id,2) == 0
     subject.blockCondition = vars.expStructure{1};
 else
     subject.blockCondition = vars.expStructure{2};
 end
 
-if (strcmp(vars.experimentType,'eeg'))
+if (vars.triggers)
     useport = pairStimtoEEG;
 end

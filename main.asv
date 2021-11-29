@@ -26,18 +26,44 @@ tic
 [vars] = varSet(vars);
 
 % You can resume an experiment at where it left off in case of a crash.
-% if (subject.restart)
-%     [filename, pathname] = uigetfile('*.mat', 'Pick last saved file ');
-%     load([pathname filename]);
-%     starttrial = t;
-%     vars.restarted = 1;
-% else
-%     starttrial=1;
-% end
+if (subject.restart)
+    [filename, pathname] = uigetfile('*.mat', 'Pick last saved file ');
+    load([pathname filename]);
+    starttrial = t;
+    vars.restarted = 1;
+else
+    starttrial=1;
+end
 
 % Below script sets the initial value for variables we need for the
 % experiment.
 initialiseVars;
+
+if (vars.doInstr)
+    startInstructs; %also includes practice trials
+end
+
+%Turn off practice function
+vars.practice = false;
+
+%set counterbalanced conditions and colours
+if mod(subject.id,2) == 0
+    subject.blockCondition = vars.expStructure{1};
+    vars.colourCode1 = [0.9290 0.6940 0.1250];
+    vars.colourCode2 = [0.6350 0.0780 0.1840];
+    vars.colourCodeN = [0,0,0];
+    vars.colourNames = {'orange','red','black'};
+    colours = [vars.colourCode1; vars.colourCode2];
+    vars.colours = colours;
+else
+    subject.blockCondition = vars.expStructure{2};
+    vars.colourCode1 = [0 1 1];
+    vars.colourCode2 = [0 1 0.4980];
+    vars.colourCodeN = [0,0,0];
+    vars.colourNames = {'blue','green','black'};
+    colours = [vars.colourCode1; vars.colourCode2];
+    vars.colours = colours;
+end
 
 if (strcmp(vars.expLengthMeasure,'trials'))
     % Generate the struct of trials and cues to be given on each trial.
@@ -57,9 +83,6 @@ else
         cell(1,1),'tileClicked',cell(1,1)));
 end
 
-if (vars.doInstr)
-    startInstructs;
-end
 
 % We need to see which experiment we are doing: behavioural or eeg.
 % Behavioural: allow participants to choose while tile to reveal and click
@@ -83,11 +106,11 @@ if (strcmp(vars.expLengthMeasure,"trials"))
     elseif (strcmp(vars.experimentType,'eeg'))
         for t = 1 : length(trials)
             % trigger for start of stimuli
-%             if (strcmp(trials.type, 'fixed'))
-%                 sendTrig(100,useport)  
-%             elseif (strcmp(trials.type, 'descending'))
-%                 sendTrig(200,useport)
-%             end
+            %             if (strcmp(trials.type, 'fixed'))
+            %                 sendTrig(100,useport)
+            %             elseif (strcmp(trials.type, 'descending'))
+            %                 sendTrig(200,useport)
+            %             end
             
             eegLoop;
         end
@@ -113,12 +136,17 @@ else
             else
                 t = subject.numOfTrials;
                 % trigger for start of stimuli
-%             if (strcmp(trials(t).type, 'fixed'))
-%                 sendTrig(100,useport)  
-%             elseif (strcmp(trials(t).type, 'decreasing'))
-%                 sendTrig(200,useport)
-%             end
-                
+                % starts with 100 is fixed, 200 is decreasing
+                % difficulty levels noted: 113 is hardest, 117 is easiest
+                if (vars.triggers)
+                    difficulty = vars.difficultyLevels(vars.trialmatrix(vars.withinBlockNumber),1);
+                    if (strcmp(trials(t).type, 'fixed'))
+                        trialtrigger = 100 + difficulty;
+                    elseif (strcmp(trials(t).type, 'decreasing'))
+                        trialtrigger = 200 + difficulty;
+                    end
+                    sendTrig(trialtrigger,useport)
+                end
                 eegLoop;
             end
         end
@@ -126,4 +154,4 @@ else
 end
 
 % End the experiment
-subject = endExp(subject,trials,Sc);
+subject = endExp(subject,trials,vars,Sc);

@@ -1,5 +1,5 @@
 % End the experiment after trials are over.
-function [subject] = endExp(subject,trials,Sc)
+function [subject] = endExp(subject,trials,vars,Sc)
 
     % Compute total number of tile flips and total time on experiment for this
     % subject.
@@ -28,6 +28,8 @@ function [subject] = endExp(subject,trials,Sc)
         end
     end
     
+    save([pwd '/' vars.rawdata_path num2str(subject.id) '/behaviour/' subject.fileName '_end' ],'trials', 'vars', 'subject');
+
     Screen('CloseAll');
     ListenChar(0);
     DisableKeysForKbCheck([]);

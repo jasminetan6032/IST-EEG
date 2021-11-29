@@ -78,13 +78,13 @@ trials(n).trueColour = colourNames(trueAns);
 % Initialise our grids for each trial
 grid = zeros(X,Y);
 if trueAns == 1
-    numOfColour1 = ceil(tiles/2);
-    numOfColour2 = floor(tiles/2);
+    numOfColour1 = vars.difficultyLevels(vars.trialmatrix(vars.withinBlockNumber),1);
+    numOfColour2 = vars.difficultyLevels(vars.trialmatrix(vars.withinBlockNumber),2);
 else
-    numOfColour1 = floor(tiles/2);
-    numOfColour2 = ceil(tiles/2);
+    numOfColour1 = vars.difficultyLevels(vars.trialmatrix(vars.withinBlockNumber),2);
+    numOfColour2 = vars.difficultyLevels(vars.trialmatrix(vars.withinBlockNumber),1);
 end
-% check how many of each colour should be in the grid.
+% make note of how many of each colour should be in the grid.
 trials(n).numOfColour1 = numOfColour1;
 trials(n).numOfColour2 = numOfColour2;
 

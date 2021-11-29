@@ -56,6 +56,13 @@ optionCoords(2,2) = winAreaY*0.875;
 optionCoords(3,2) = winAreaX*0.65;
 optionCoords(4,2) = winAreaY*0.975;
 vars.optionCoords = optionCoords;
+spacebarCoords = [];
+spacebarCoords(1,1) = winAreaX*0.25;
+spacebarCoords(2,1) = winAreaY*0.875;
+spacebarCoords(3,1) = winAreaX*0.45;
+spacebarCoords(4,1) = winAreaY*0.975;
+vars.spacebarCoords = spacebarCoords;
+
 
 % x and y coordinates of where to put feedback text on the screen.
 trialx = answerCoords(1) + ((answerCoords(3) - answerCoords(1))/2);
@@ -73,7 +80,7 @@ points = 0;
 cfg.bar.maxScale            = 55;
 cfg.bar.minScale            = -55;
 cfg.backgroundColour = Sc.bkgCol;           % grey
-cfg.fontsize=25;
+cfg.fontsize=18;
 % instructions on screen
 cfg.instr.cjtext        = {'50%' '100%'};           % confidence judgement text
 cfg.instr.instr = {'Right click to confirm'}; % how to respond.
@@ -86,11 +93,19 @@ subject.totalFlips = 0;
 subject.totalTime = 0;
 subject.numOfTrials = 1;
 if mod(subject.id,2) == 0
-    subject.blockCondition = vars.expStructure{1}
+    subject.blockCondition = vars.expStructure{1};
+        vars.colourCode1 = [0.9290 0.6940 0.1250];
+    vars.colourCode2 = [0.6350 0.0780 0.1840];
+    vars.colourCodeN = [0,0,0];
+    vars.colourNames = {'orange','red','black'};
 else
-    subject.blockCondition = vars.expStructure{2}
+    subject.blockCondition = vars.expStructure{2};
+        vars.colourCode1 = [0.9290 0.6940 0.1250];
+    vars.colourCode2 = [0.6350 0.0780 0.1840];
+    vars.colourCodeN = [0,0,0];
+    vars.colourNames = {'orange','red','black'};
 end
 
-% if (strcmp(vars.experimentType,'eeg'))
-%     useport = pairStimtoEEG;
-% end
+if (vars.triggers)
+    useport = pairStimtoEEG;
+end

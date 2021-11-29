@@ -14,13 +14,13 @@
     cfg.bar.barrect             = CenterRectOnPoint([0 0 (cfg.bar.nScale*cfg.bar.cursorwidth) (cfg.bar.cursorheight)], ...
                                 window.center(1),window.rect(4)*cfg.bar.positiony);
     cfg.bar.barlength           = cfg.bar.barrect(3)- cfg.bar.barrect(1);
-    cfg.bar.gap_size            = 11;
+    cfg.bar.gap_size            = 11/2;
     
     
     %define rect for gap in middle (separate L/R)
     cfg.bar.gaprect            = CenterRectOnPoint([0,0,cfg.bar.cursorwidth * cfg.bar.gap_size,cfg.bar.cursorheight],...
                                 window.center(1), window.rect(4)*cfg.bar.positiony);
-    cfg.bar.gaplength           = 10;
+    cfg.bar.gaplength           = 10/2;
 
     % define increments along bar, that cursor can rest on    
     cfg.bar.xshift              = [linspace(cfg.bar.barrect(1)+cfg.bar.cursorwidth.*.5,...
